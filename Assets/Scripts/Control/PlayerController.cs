@@ -2,36 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using RPG.Movement;
 
-public class PlayerController : MonoBehaviour
+namespace RPG.Control
 {
-    Mover _mover;
-
-    private void Awake()
+    public class PlayerController : MonoBehaviour
     {
-        _mover = GetComponent<Mover>();
-    }
+        Mover _mover;
+        bool _wantsToRun = false;
 
-
-    public void MoveToCursor()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-        RaycastHit hit;
-        bool hasHit = Physics.Raycast(ray, out hit);
-
-        float distanceToMove = Vector3.Distance(hit.point, transform.position);
-
-        //don't move if distance is too small because the animations become weird
-        if (hasHit && distanceToMove > 0.5)
+        private void Awake()
         {
-            _mover.MoveTo(hit.point);
+            _mover = GetComponent<Mover>();
         }
+
+        private void Update()
+        {
+            if (_wantsToRun)
+                _mover.MoveToCursor();
+        }
+
+        public void OnMove(InputAction.CallbackContext context)
+        {
+;            if (context.started)
+                _wantsToRun = true;
+            else if (context.performed)
+                _wantsToRun = true;
+            else if (context.canceled)
+                _wantsToRun = false;
+        }
+
     }
 
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
