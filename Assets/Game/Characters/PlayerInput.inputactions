@@ -1,17 +1,17 @@
 {
-    "name": "URP_RPG",
+    "name": "PlayerInput",
     "maps": [
         {
             "name": "Player",
             "id": "f4f16d18-a136-4d23-8d42-b0958a3a7a79",
             "actions": [
                 {
-                    "name": "Move",
-                    "type": "Value",
+                    "name": "Click",
+                    "type": "Button",
                     "id": "c760a53a-8d5a-403a-9456-ac2ef3e7dda6",
-                    "expectedControlType": "Vector3",
+                    "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold(duration=0.4,pressPoint=0.5)",
+                    "interactions": "Hold",
                     "initialStateCheck": true
                 },
                 {
@@ -31,6 +31,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Attack",
+                    "type": "Value",
+                    "id": "1cfb2ef7-407a-4a8e-9212-9e273580b82e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -126,10 +135,21 @@
                     "name": "",
                     "id": "ab93cda6-63a7-4ffd-80bb-a47035285a0a",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "Hold",
+                    "interactions": "Hold(duration=0.0001)",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Move",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "df2519a2-1180-400b-b5f8-818569b57434",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Hold(duration=0.0001)",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
