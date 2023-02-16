@@ -37,7 +37,7 @@ namespace RPG.Control
 
                 if (Mouse.current.leftButton.IsPressed())
                 {
-                    GetComponent<Fighter>().Attack();
+                    GetComponent<Fighter>().Attack(target);
                 }
                 return true; //return true even if just hovering over a valid target
             }
@@ -53,7 +53,7 @@ namespace RPG.Control
             {
                 if (Mouse.current.leftButton.IsPressed())
                 {
-                _mover.MoveTo(hit.point);
+                _mover.StartMoveAction(hit.point);
                 }
                 return true;
             }

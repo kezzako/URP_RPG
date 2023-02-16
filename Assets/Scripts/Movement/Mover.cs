@@ -1,3 +1,4 @@
+using RPG.Combat;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -32,9 +33,21 @@ namespace RPG.Movement
             _animator.SetFloat("forwardSpeed", localVelocity.z);
         }
 
+        public void StartMoveAction(Vector3 destination)
+        {
+            GetComponent<Fighter>().Cancel();
+            MoveTo(destination);
+        }
+
+        public void StopMoving()
+        {
+            _navMeshAgent.isStopped = true;
+        }
+
         public void MoveTo(Vector3 destination)
         {
             _navMeshAgent.destination = destination;
+            _navMeshAgent.isStopped = false;
         }
 
     }
