@@ -503,6 +503,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d96088dd009af34588ce83c1e519208, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _weaponRange: 2
+--- !u!114 &455310128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455310117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55f6bbd711cdba54eb84df9a43842ef5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &543777963 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 496924, guid: 653c97bd88b4b084d87714542c43ee5a,
