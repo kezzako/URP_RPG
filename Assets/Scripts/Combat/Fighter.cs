@@ -9,12 +9,17 @@ namespace RPG.Combat
     public class Fighter : MonoBehaviour, IActions
     {
         [SerializeField] float _weaponRange = 2f;
+        float _timeBetweenAttackAnimCycles = 0.5f;
+        float _lastAttackTimeStamp = 0;
+
         Transform _combatTarget;
         Mover _mover;
+        Animator _animator;
 
         private void Awake()
         {
             _mover = GetComponent<Mover>();
+            _animator = GetComponent<Animator>();
         }
 
         private void Update()
@@ -28,6 +33,19 @@ namespace RPG.Combat
             else
             {
                 _mover.Cancel();
+                AttackBehavior();
+            }
+        }
+
+        private void AttackBehavior()
+        {
+            if (Time.time - _lastAttackTimeStamp > _timeBetweenAttackAnimCycles)
+            {
+                _lastAttackTimeStamp = Time.time;
+                //start attack animation
+                _animator.SetTrigger("attack");
+                //rotate around Y axis to look at the target
+                transform.LookAt(new Vector3(_combatTarget.position.x, transform.position.y, _combatTarget.position.z));
             }
         }
 
@@ -45,6 +63,14 @@ namespace RPG.Combat
         public void Cancel()
         {
             _combatTarget = null;
+            //stop attack animation
+            _animator.ResetTrigger("attack");
+        }
+
+        //Player animation event
+        void Hit()
+        {
+
         }
     }
 }
