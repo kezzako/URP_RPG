@@ -9,12 +9,15 @@ namespace RPG.Combat
     public class Fighter : MonoBehaviour, IActions
     {
         [SerializeField] float _weaponRange = 2f;
+        [SerializeField] float _weaponDamage = 5f;
+
         float _timeBetweenAttackAnimCycles = 0.5f;
         float _lastAttackTimeStamp = 0;
 
         Transform _combatTarget;
         Mover _mover;
         Animator _animator;
+        Health _targetHealth;
 
         private void Awake()
         {
@@ -42,10 +45,22 @@ namespace RPG.Combat
             if (Time.time - _lastAttackTimeStamp > _timeBetweenAttackAnimCycles)
             {
                 _lastAttackTimeStamp = Time.time;
-                //start attack animation
+                //start attack animation. Animation triggers Hit() event
                 _animator.SetTrigger("attack");
                 //rotate around Y axis to look at the target
                 transform.LookAt(new Vector3(_combatTarget.position.x, transform.position.y, _combatTarget.position.z));
+
+            }
+        }
+
+        //Player attack animation event
+        void Hit()
+        {
+            Health targetHealth = _combatTarget.GetComponent<Health>();
+
+            if (targetHealth != null)
+            {
+                targetHealth.takeDamage(_weaponDamage);
             }
         }
 
@@ -67,10 +82,5 @@ namespace RPG.Combat
             _animator.ResetTrigger("attack");
         }
 
-        //Player animation event
-        void Hit()
-        {
-
-        }
     }
 }
