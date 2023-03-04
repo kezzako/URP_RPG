@@ -8,16 +8,16 @@ namespace RPG.Combat
 {
     public class Fighter : MonoBehaviour, IActions
     {
-        [SerializeField] float _weaponRange = 2f;
-        [SerializeField] float _weaponDamage = 5f;
+        float _weaponRange = 1f;
+        float _weaponDamage = 5f;
 
         float _timeBetweenAttackAnimCycles = 0.5f;
         float _lastAttackTimeStamp = 0;
 
-        Transform _combatTarget;
+        Health _combatTarget;
         Mover _mover;
         Animator _animator;
-        Health _targetHealth;
+        //Health _targetHealth;
 
         private void Awake()
         {
@@ -27,11 +27,15 @@ namespace RPG.Combat
 
         private void Update()
         {
+            //do not do fighter actions if no target or if target is dead
             if (_combatTarget == null) return;
-
-            if (_combatTarget != null && !GetIsInRange())
+            if (_combatTarget.IsDead())
             {
-                _mover.MoveTo(_combatTarget.position);
+                return;
+            }
+            if (_combatTarget != null && !IsInRange())
+            {
+                _mover.MoveTo(_combatTarget.transform.position);
             }
             else
             {
@@ -47,32 +51,37 @@ namespace RPG.Combat
                 _lastAttackTimeStamp = Time.time;
                 //start attack animation. Animation triggers Hit() event
                 _animator.SetTrigger("attack");
+                _animator.ResetTrigger("stopAttack");
                 //rotate around Y axis to look at the target
-                transform.LookAt(new Vector3(_combatTarget.position.x, transform.position.y, _combatTarget.position.z));
+                transform.LookAt(new Vector3(_combatTarget.transform.position.x, transform.position.y, _combatTarget.transform.position.z));
 
             }
         }
 
-        //Player attack animation event
+        public bool CanAttack(CombatTarget combatTarget)
+        {
+            //return false is target is null or dead
+            if(combatTarget == null || combatTarget.GetComponent<Health>().IsDead()) return false;
+            else return true;
+        }
+
+        //Player punch attack animation event
         void Hit()
         {
             if(_combatTarget == null) return;
 
-            if(_combatTarget.TryGetComponent<Health>(out Health targetHealth))
-            {
-                targetHealth.takeDamage(_weaponDamage);
-            }
+            _combatTarget.takeDamage(_weaponDamage);  
         }
 
-        private bool GetIsInRange()
+        private bool IsInRange()
         {
-            return Vector3.Distance(transform.position, _combatTarget.position) < _weaponRange;
+            return Vector3.Distance(transform.position, _combatTarget.transform.position) < _weaponRange;
         }
 
         public void Attack(CombatTarget combatTarget)
         {
             GetComponent<ActionScheduler>().StartAction(this);
-            _combatTarget = combatTarget.transform;
+            _combatTarget = combatTarget.GetComponent<Health>();
         }
 
         public void Cancel()
@@ -80,6 +89,7 @@ namespace RPG.Combat
             _combatTarget = null;
             //stop attack animation
             _animator.ResetTrigger("attack");
+            _animator.SetTrigger("stopAttack");
         }
 
     }

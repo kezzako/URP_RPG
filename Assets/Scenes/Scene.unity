@@ -1796,7 +1796,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Avatar
       value: 
-      objectReference: {fileID: 9000000, guid: 5db46cfbf3cf9774e8d3fc86f23332da, type: 3}
+      objectReference: {fileID: 9000000, guid: d288a0e4a2d923b46898986e979da643, type: 3}
     - target: {fileID: 886374875965148715, guid: b24abe06a4fe6d948b977ad2ff1127b5,
         type: 3}
       propertyPath: m_ApplyRootMotion
@@ -1860,12 +1860,17 @@ PrefabInstance:
     - target: {fileID: 886374876420392974, guid: b24abe06a4fe6d948b977ad2ff1127b5,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7223962641316146625, guid: b24abe06a4fe6d948b977ad2ff1127b5,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8988971482328993783, guid: b24abe06a4fe6d948b977ad2ff1127b5,
+        type: 3}
+      propertyPath: m_Name
+      value: Shield
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b24abe06a4fe6d948b977ad2ff1127b5, type: 3}

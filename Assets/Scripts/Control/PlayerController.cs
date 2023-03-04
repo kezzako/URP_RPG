@@ -11,11 +11,13 @@ namespace RPG.Control
     public class PlayerController : MonoBehaviour
     {
         Mover _mover;
+        Fighter _fighter;
         // bool _wantsToRun = false;
 
         private void Awake()
         {
             _mover = GetComponent<Mover>();
+            _fighter = GetComponent<Fighter>();
         }
 
         private void Update()
@@ -32,8 +34,10 @@ namespace RPG.Control
             foreach (RaycastHit hit in hits)
             {
                 CombatTarget target = hit.transform.gameObject.GetComponent<CombatTarget>();
-                //exit loop if no CombatTarget exists
-                if (target == null) continue;
+
+                //skip loop iteration if not a valid target to attack
+                if (!_fighter.CanAttack(target)) continue;
+                //if (target == null) continue;
 
                 if (Mouse.current.leftButton.IsPressed())
                 {
