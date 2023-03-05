@@ -15,14 +15,18 @@ namespace RPG.Control
         Fighter _fighter;
         Health _health;
         Mover _mover;
+        ActionScheduler _actionScheduler;
 
-        Vector3 guardPosition; //the position we are guarding. Return to this position after we are done moving
+        Vector3 guardPosition; //the position we are guarding. Always end up returning here
+        float lastSawPlayerTimestamp = 0;
+        [SerializeField] float _suspicionTime = 3f;
 
         private void Awake()
         {
             _fighter = GetComponent<Fighter>();
             _health = GetComponent<Health>();
             _mover = GetComponent<Mover>();
+            _actionScheduler = GetComponent<ActionScheduler>();
         }
 
         private void Start()
@@ -38,12 +42,30 @@ namespace RPG.Control
 
             if (InAttackRangeOfPlayer(_chaseDistance) && _fighter.CanAttack(_player))
             {
-                _fighter.Attack(_player);
+                lastSawPlayerTimestamp = Time.time;
+                AttackBehavior();
             }
+            //if suspicionTime has not elapsed yet, we stand there
+            else if ((Time.time - lastSawPlayerTimestamp) < _suspicionTime)
+            {
+                SuspicionBehavior();
+            }
+            //if suspicionTime has elapsed, go back to guardPosition
             else
             {
                 _mover.StartMoveAction(guardPosition); //will also cancel the fighter action
             }
+        }
+
+        private void SuspicionBehavior()
+        {
+            //cancel current action, which means do nothing
+            _actionScheduler.CancelCurrentAction();
+        }
+
+        private void AttackBehavior()
+        {
+            _fighter.Attack(_player);
         }
 
         //returns if distance between us and player is smaller than range
