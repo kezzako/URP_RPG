@@ -8,17 +8,32 @@ namespace RPG.Control
     public class PatrolPath : MonoBehaviour
     {
         const float waypointGizmoRadius = 0.4f;
-        Color[] Colors = { Color.gray, Color.blue, Color.red, Color.yellow, Color.green, Color.white, Color.black };
 
         private void OnDrawGizmos()
         {
             for (int i = 0; i < transform.childCount; i++)
             {
-                Gizmos.color = Colors[i];
-                Gizmos.DrawSphere(transform.GetChild(i).position, waypointGizmoRadius);
+                Gizmos.DrawSphere(GetWaypoint(i), waypointGizmoRadius);
+
+                Gizmos.DrawLine(GetWaypoint(i), GetWaypoint(GetNextIndex(i)));
+                Debug.Log("Draw line from " + i + " to " + GetNextIndex(i));
             }
 
 
+        }
+
+        private Vector3 GetWaypoint(int i)
+        {
+            return transform.GetChild(i).position;
+        }
+
+        private int GetNextIndex(int i)
+        {
+            if(i + 1 >= transform.childCount)
+            {
+                return 0;
+            }
+            return i + 1;
         }
     }
 }
