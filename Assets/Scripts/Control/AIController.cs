@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using RPG.Combat;
 using RPG.Core;
+using RPG.Movement;
 
 namespace RPG.Control
 {
@@ -13,16 +14,22 @@ namespace RPG.Control
         GameObject _player;
         Fighter _fighter;
         Health _health;
+        Mover _mover;
+
+        Vector3 guardPosition; //the position we are guarding. Return to this position after we are done moving
 
         private void Awake()
         {
             _fighter = GetComponent<Fighter>();
             _health = GetComponent<Health>();
+            _mover = GetComponent<Mover>();
         }
 
         private void Start()
         {
             _player = GameObject.FindWithTag("Player");
+
+            guardPosition = transform.position;
         }
 
         private void Update()
@@ -35,7 +42,7 @@ namespace RPG.Control
             }
             else
             {
-                _fighter.Cancel();
+                _mover.StartMoveAction(guardPosition); //will also cancel the fighter action
             }
         }
 

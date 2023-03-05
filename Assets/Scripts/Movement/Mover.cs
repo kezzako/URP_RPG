@@ -49,6 +49,7 @@ namespace RPG.Movement
             _navMeshAgent.isStopped = true;
         }
 
+        //Do not call this directly from other classes! Use StartMoveAction() instead!
         public void MoveTo(Vector3 destination)
         {
             _navMeshAgent.destination = destination;
