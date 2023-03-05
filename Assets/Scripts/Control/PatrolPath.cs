@@ -16,18 +16,15 @@ namespace RPG.Control
                 Gizmos.DrawSphere(GetWaypoint(i), waypointGizmoRadius);
 
                 Gizmos.DrawLine(GetWaypoint(i), GetWaypoint(GetNextIndex(i)));
-                Debug.Log("Draw line from " + i + " to " + GetNextIndex(i));
             }
-
-
         }
 
-        private Vector3 GetWaypoint(int i)
+        public Vector3 GetWaypoint(int i)
         {
             return transform.GetChild(i).position;
         }
 
-        private int GetNextIndex(int i)
+        public int GetNextIndex(int i)
         {
             if(i + 1 >= transform.childCount)
             {

@@ -4,6 +4,7 @@ using UnityEngine;
 using RPG.Combat;
 using RPG.Core;
 using RPG.Movement;
+using System;
 
 namespace RPG.Control
 {
@@ -11,15 +12,19 @@ namespace RPG.Control
     public class AIController : MonoBehaviour
     {
         [SerializeField] float _chaseDistance = 3f;
+        [SerializeField] float _suspicionTime = 3f;
+        [SerializeField] PatrolPath _patrolPath; //assign  in the editor the patrol path you want the guard to follow
+        float _waypointTolerance = 0.5f; //the distance in which we are considered at the waypoint
+
         GameObject _player;
         Fighter _fighter;
         Health _health;
         Mover _mover;
         ActionScheduler _actionScheduler;
 
-        Vector3 guardPosition; //the position we are guarding. Always end up returning here
-        float lastSawPlayerTimestamp = 0;
-        [SerializeField] float _suspicionTime = 3f;
+        Vector3 _guardPosition; //the position we are guarding. Always end up returning here
+        float _lastSawPlayerTimestamp = 0;
+        int _currentWaypointIndex = 0;
 
         private void Awake()
         {
@@ -33,7 +38,7 @@ namespace RPG.Control
         {
             _player = GameObject.FindWithTag("Player");
 
-            guardPosition = transform.position;
+            _guardPosition = transform.position;
         }
 
         private void Update()
@@ -42,19 +47,55 @@ namespace RPG.Control
 
             if (InAttackRangeOfPlayer(_chaseDistance) && _fighter.CanAttack(_player))
             {
-                lastSawPlayerTimestamp = Time.time;
+                _lastSawPlayerTimestamp = Time.time;
                 AttackBehavior();
             }
             //if suspicionTime has not elapsed yet, we stand there
-            else if ((Time.time - lastSawPlayerTimestamp) < _suspicionTime)
+            else if ((Time.time - _lastSawPlayerTimestamp) < _suspicionTime)
             {
                 SuspicionBehavior();
             }
-            //if suspicionTime has elapsed, go back to guardPosition
+            //if suspicionTime has elapsed
             else
             {
-                _mover.StartMoveAction(guardPosition); //will also cancel the fighter action
+                PatrolBehavior();
+                Debug.Log("patrol");
             }
+        }
+
+        private void PatrolBehavior()
+        {
+            Vector3 nextPosition = _guardPosition;
+
+            if(_patrolPath != null)
+            {
+                if (AtWaypoint())
+                {
+                    CycleWaypoint();
+                }
+                nextPosition = GetCurrentWaypoint();
+            }
+
+            _mover.StartMoveAction(nextPosition); //will also cancel the fighter action
+        }
+
+        private Vector3 GetCurrentWaypoint()
+        {
+            return _patrolPath.GetWaypoint(_currentWaypointIndex);
+        }
+
+        private void CycleWaypoint()
+        {
+            _currentWaypointIndex = _patrolPath.GetNextIndex(_currentWaypointIndex);
+        }
+
+        private bool AtWaypoint()
+        {
+            float distanceToWaypoint = Vector3.Distance(transform.position, GetCurrentWaypoint());
+            Debug.Log("At way point? " + distanceToWaypoint);
+            Debug.Log("At way point? " + (distanceToWaypoint <= _waypointTolerance));
+
+            return (distanceToWaypoint <= _waypointTolerance);
         }
 
         private void SuspicionBehavior()
