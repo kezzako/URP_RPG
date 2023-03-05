@@ -70,7 +70,7 @@ namespace RPG.Control
                 }
                 return true;
             }
-            //if no target or too close to the target
+
             return false;
         }
 

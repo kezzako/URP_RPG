@@ -11,10 +11,7 @@ namespace RPG.Control
 
     public class AIController : MonoBehaviour
     {
-        [SerializeField] float _chaseDistance = 3f;
-        [SerializeField] float _suspicionTime = 3f;
         [SerializeField] PatrolPath _patrolPath; //assign  in the editor the patrol path you want the guard to follow
-        float _waypointTolerance = 0.5f; //the distance in which we are considered at the waypoint
 
         GameObject _player;
         Fighter _fighter;
@@ -22,9 +19,15 @@ namespace RPG.Control
         Mover _mover;
         ActionScheduler _actionScheduler;
 
-        Vector3 _guardPosition; //the position we are guarding. Always end up returning here
-        float _lastSawPlayerTimestamp = 0;
-        int _currentWaypointIndex = 0;
+        Vector3 _guardPosition;             //the position we are guarding. Always end up returning here
+        float _chaseDistance = 3f;          //radius within which will chase player
+        float _suspicionTime = 3f;          //seconds we stop after player escapes chase
+        float _lastSawPlayerTimestamp = 0; 
+        int _currentWaypointIndex = 0;      
+        float _waypointTolerance = 0.5f;    //the distance in which we are considered at the waypoint
+        float _waypointDwellTime = 3f;      //seconds we stop at every waypoint during patrol
+        float _arrivedAtWaypointTimestamp = 0;
+
 
         private void Awake()
         {
@@ -59,7 +62,6 @@ namespace RPG.Control
             else
             {
                 PatrolBehavior();
-                Debug.Log("patrol");
             }
         }
 
@@ -69,9 +71,11 @@ namespace RPG.Control
 
             if(_patrolPath != null)
             {
-                if (AtWaypoint())
+                //if at waypoint and waypoint dwelltime elapsed, set next waypoint
+                if (AtWaypoint() && ((Time.time - _arrivedAtWaypointTimestamp) > _waypointDwellTime))
                 {
                     CycleWaypoint();
+                    _arrivedAtWaypointTimestamp = Time.time;
                 }
                 nextPosition = GetCurrentWaypoint();
             }
