@@ -163,6 +163,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 339130377935470046, guid: 483a9a925c2bf754a83105157142db6c,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 4d346c7837c63584b821eb2dd430ed57, type: 2}
     - target: {fileID: 339130377935470047, guid: 483a9a925c2bf754a83105157142db6c,
         type: 3}
       propertyPath: m_Enabled
@@ -230,6 +235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _chaseDistance: 5
+  _suspicionTime: 3
 --- !u!4 &7876435958773335470 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 339130377935470042, guid: 483a9a925c2bf754a83105157142db6c,
