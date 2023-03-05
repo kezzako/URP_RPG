@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RPG.Combat
+namespace RPG.Core
 {
     public class Health : MonoBehaviour
     {
@@ -33,7 +33,6 @@ namespace RPG.Combat
                 _currentHealth = 0;
                 Die();
             }
-            Debug.Log("Health: " + _currentHealth);
         }
 
         private void Die()
@@ -41,7 +40,8 @@ namespace RPG.Combat
             if (!_isDead) 
             { 
             _animator.SetTrigger("die");
-            _isDead = true;   
+            _isDead = true;
+            GetComponent<ActionScheduler>().CancelCurrentAction();
             }
         }
     }

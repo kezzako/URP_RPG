@@ -17,7 +17,6 @@ namespace RPG.Combat
         Health _combatTarget;
         Mover _mover;
         Animator _animator;
-        //Health _targetHealth;
 
         private void Awake()
         {
@@ -29,13 +28,16 @@ namespace RPG.Combat
         {
             //do not do fighter actions if no target or if target is dead
             if (_combatTarget == null) return;
+
             if (_combatTarget.IsDead())
             {
+                CancelAttackAnimations();
                 return;
             }
             if (_combatTarget != null && !IsInRange())
             {
                 _mover.MoveTo(_combatTarget.transform.position);
+                CancelAttackAnimations();
             }
             else
             {
@@ -58,11 +60,19 @@ namespace RPG.Combat
             }
         }
 
-        public bool CanAttack(CombatTarget combatTarget)
+        public bool CanAttack(GameObject combatTarget)
         {
             //return false is target is null or dead
             if(combatTarget == null || combatTarget.GetComponent<Health>().IsDead()) return false;
             else return true;
+        }
+
+        public void Attack(GameObject combatTarget)
+        {
+            GetComponent<ActionScheduler>().StartAction(this);
+            _combatTarget = combatTarget.GetComponent<Health>();
+
+            Debug.Log(gameObject.name + " Attack enemy");
         }
 
         //Player punch attack animation event
@@ -78,16 +88,14 @@ namespace RPG.Combat
             return Vector3.Distance(transform.position, _combatTarget.transform.position) < _weaponRange;
         }
 
-        public void Attack(CombatTarget combatTarget)
-        {
-            GetComponent<ActionScheduler>().StartAction(this);
-            _combatTarget = combatTarget.GetComponent<Health>();
-        }
-
         public void Cancel()
         {
             _combatTarget = null;
-            //stop attack animation
+            CancelAttackAnimations();
+        }
+
+        public void CancelAttackAnimations()
+        {
             _animator.ResetTrigger("attack");
             _animator.SetTrigger("stopAttack");
         }

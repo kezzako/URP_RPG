@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using RPG.Movement;
 using System;
 using RPG.Combat;
+using RPG.Core;
 
 namespace RPG.Control
 {
@@ -12,16 +13,19 @@ namespace RPG.Control
     {
         Mover _mover;
         Fighter _fighter;
-        // bool _wantsToRun = false;
+        Health _health;
 
         private void Awake()
         {
             _mover = GetComponent<Mover>();
             _fighter = GetComponent<Fighter>();
+            _health = GetComponent<Health>();
         }
 
         private void Update()
         {
+            if (_health.IsDead()) return;
+
             if (DoCombat()) return;
             if (DoMovement()) return;
         }
@@ -35,13 +39,18 @@ namespace RPG.Control
             {
                 CombatTarget target = hit.transform.gameObject.GetComponent<CombatTarget>();
 
+                //Debug.Log(target);
+
+                //skip iteration if no target
+                if (target == null) continue;
+
                 //skip loop iteration if not a valid target to attack
-                if (!_fighter.CanAttack(target)) continue;
-                //if (target == null) continue;
+                if (!_fighter.CanAttack(target.gameObject)) continue;
 
                 if (Mouse.current.leftButton.IsPressed())
                 {
-                    GetComponent<Fighter>().Attack(target);
+                    GetComponent<Fighter>().Attack(target.gameObject);
+
                 }
                 return true; //return true even if just hovering over a valid target
             }
@@ -57,7 +66,7 @@ namespace RPG.Control
             {
                 if (Mouse.current.leftButton.IsPressed())
                 {
-                _mover.StartMoveAction(hit.point);
+                    _mover.StartMoveAction(hit.point);
                 }
                 return true;
             }
