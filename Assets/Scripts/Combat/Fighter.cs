@@ -71,8 +71,6 @@ namespace RPG.Combat
         {
             GetComponent<ActionScheduler>().StartAction(this);
             _combatTarget = combatTarget.GetComponent<Health>();
-
-            Debug.Log(gameObject.name + " Attack enemy");
         }
 
         //Player punch attack animation event

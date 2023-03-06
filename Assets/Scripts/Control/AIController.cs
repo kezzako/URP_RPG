@@ -18,9 +18,12 @@ namespace RPG.Control
         Health _health;
         Mover _mover;
         ActionScheduler _actionScheduler;
+        
 
         Vector3 _guardPosition;             //the position we are guarding. Always end up returning here
         float _chaseDistance = 3f;          //radius within which will chase player
+        float _chaseSpeed = 5f;             //speed at which will chase player
+        float _patrolSpeed = 3f;            //speed when we are not chasing player (patrol, suspicion)
         float _suspicionTime = 3f;          //seconds we stop after player escapes chase
         float _lastSawPlayerTimestamp = 0; 
         int _currentWaypointIndex = 0;      
@@ -96,20 +99,20 @@ namespace RPG.Control
         private bool AtWaypoint()
         {
             float distanceToWaypoint = Vector3.Distance(transform.position, GetCurrentWaypoint());
-            Debug.Log("At way point? " + distanceToWaypoint);
-            Debug.Log("At way point? " + (distanceToWaypoint <= _waypointTolerance));
 
             return (distanceToWaypoint <= _waypointTolerance);
         }
 
         private void SuspicionBehavior()
         {
+            _mover.SetNavSpeed(_patrolSpeed);
             //cancel current action, which means do nothing
             _actionScheduler.CancelCurrentAction();
         }
 
         private void AttackBehavior()
         {
+            _mover.SetNavSpeed(_chaseSpeed);
             _fighter.Attack(_player);
         }
 
