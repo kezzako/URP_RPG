@@ -12,7 +12,7 @@ namespace RPG.Combat
         float _weaponDamage = 5f;
 
         float _timeBetweenAttackAnimCycles = 0.5f;
-        float _lastAttackTimeStamp = 0;
+        float _lastAttackTimeStamp = float.MinValue;
 
         Health _combatTarget;
         Mover _mover;

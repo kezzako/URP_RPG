@@ -25,11 +25,11 @@ namespace RPG.Control
         float _chaseSpeed = 5f;             //speed at which will chase player
         float _patrolSpeed = 3f;            //speed when we are not chasing player (patrol, suspicion)
         float _suspicionTime = 3f;          //seconds we stop after player escapes chase
-        float _lastSawPlayerTimestamp = 0; 
+        float _lastSawPlayerTimestamp = float.MinValue;
         int _currentWaypointIndex = 0;      
         float _waypointTolerance = 0.5f;    //the distance in which we are considered at the waypoint
         float _waypointDwellTime = 3f;      //seconds we stop at every waypoint during patrol
-        float _arrivedAtWaypointTimestamp = 0;
+        float _arrivedAtWaypointTimestamp = float.MinValue;
 
 
         private void Awake()
