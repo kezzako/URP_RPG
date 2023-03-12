@@ -29,6 +29,8 @@ namespace RPG.Movement
             _navMeshAgent.enabled = !_health.IsDead();
 
             UpdateAnimator();
+
+            //Debug.Log("mover: " + _navMeshAgent.isStopped + " obj: " + gameObject.name);
         }
 
         private void UpdateAnimator()
@@ -47,6 +49,12 @@ namespace RPG.Movement
         public void Cancel()
         {
             _navMeshAgent.isStopped = true;
+            //Debug.Log("stop mover" + gameObject.name);
+        }
+
+        public void StartMover()
+        {
+            _navMeshAgent.isStopped = false;
         }
 
         //Do not call this directly from other classes! Use StartMoveAction() instead!

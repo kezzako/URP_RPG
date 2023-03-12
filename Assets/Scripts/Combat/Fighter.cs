@@ -14,6 +14,8 @@ namespace RPG.Combat
         float _timeBetweenAttackAnimCycles = 0.5f;
         float _lastAttackTimeStamp = float.MinValue;
 
+        bool _isDoingAttackAnimation = false;
+
         Health _combatTarget;
         Mover _mover;
         Animator _animator;
@@ -34,10 +36,13 @@ namespace RPG.Combat
                 CancelAttackAnimations();
                 return;
             }
-            if (_combatTarget != null && !IsInRange())
+            if (!IsInRange())// && !_isDoingAttackAnimation)
             {
-                _mover.MoveTo(_combatTarget.transform.position);
-                CancelAttackAnimations();
+                if (!_isDoingAttackAnimation)
+                {
+                    _mover.MoveTo(_combatTarget.transform.position);
+                    CancelAttackAnimations();
+                }
             }
             else
             {
@@ -50,12 +55,15 @@ namespace RPG.Combat
         {
             if (Time.time - _lastAttackTimeStamp > _timeBetweenAttackAnimCycles)
             {
+                _isDoingAttackAnimation = true;
+
                 _lastAttackTimeStamp = Time.time;
                 //start attack animation. Animation triggers Hit() event
                 _animator.SetTrigger("attack");
                 _animator.ResetTrigger("stopAttack");
                 //rotate around Y axis to look at the target
                 transform.LookAt(new Vector3(_combatTarget.transform.position.x, transform.position.y, _combatTarget.transform.position.z));
+
 
             }
         }
@@ -73,12 +81,18 @@ namespace RPG.Combat
             _combatTarget = combatTarget.GetComponent<Health>();
         }
 
-        //Player punch attack animation event
+        //Punch attack animation event
         void Hit()
         {
             if(_combatTarget == null) return;
 
-            _combatTarget.takeDamage(_weaponDamage);  
+            _combatTarget.takeDamage(_weaponDamage);
+        }
+
+        //animation event
+        void PunchEnd()
+        {
+            _isDoingAttackAnimation = false;
         }
 
         private bool IsInRange()
@@ -94,9 +108,16 @@ namespace RPG.Combat
 
         public void CancelAttackAnimations()
         {
+            _isDoingAttackAnimation = false;
             _animator.ResetTrigger("attack");
             _animator.SetTrigger("stopAttack");
         }
 
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(transform.position, _weaponRange);
+        }
     }
 }
