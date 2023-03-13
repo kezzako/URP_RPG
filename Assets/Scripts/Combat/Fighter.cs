@@ -38,10 +38,11 @@ namespace RPG.Combat
             }
             if (!IsInRange())// && !_isDoingAttackAnimation)
             {
+                CancelAttackAnimations();
+
                 if (!_isDoingAttackAnimation)
                 {
                     _mover.MoveTo(_combatTarget.transform.position);
-                    CancelAttackAnimations();
                 }
             }
             else
