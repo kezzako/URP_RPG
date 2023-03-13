@@ -21,7 +21,7 @@ namespace RPG.Control
         
 
         Vector3 _guardPosition;             //the position we are guarding. Always end up returning here
-        float _chaseDistance = 10f;          //radius within which will chase player
+        float _chaseDistance = 3f;          //radius within which will chase player
         float _chaseSpeed = 5f;             //speed at which will chase player
         float _patrolSpeed = 3f;            //speed when we are not chasing player (patrol, suspicion)
         float _suspicionTime = 3f;          //seconds we stop after player escapes chase
