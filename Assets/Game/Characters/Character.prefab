@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 339130377935470044}
   - component: {fileID: 339130377935470019}
   - component: {fileID: 8629443617792864962}
-  - component: {fileID: 5391961816306660365}
   - component: {fileID: 8629443617792864955}
   m_Layer: 0
   m_Name: Character
@@ -175,18 +174,6 @@ CapsuleCollider:
   m_Height: 1.96
   m_Direction: 1
   m_Center: {x: 0, y: 0.94, z: 0}
---- !u!114 &5391961816306660365
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 339130377935470038}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7696ca8f948186549a900f24e314f0b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8629443617792864955
 MonoBehaviour:
   m_ObjectHideFlags: 0

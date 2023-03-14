@@ -19,7 +19,9 @@ namespace RPG.Cinematics
 
         void DisableControl(PlayableDirector pd)
         {
+            Debug.Log("DisableControl");
             GameObject player = GameObject.FindWithTag("Player");
+            Debug.Log(player);
             player.GetComponent<ActionScheduler>().CancelCurrentAction();
             player.GetComponent<PlayerController>().enabled = false;
 
@@ -27,6 +29,8 @@ namespace RPG.Cinematics
 
         void EnableControl(PlayableDirector pd)
         {
+            Debug.Log("EnableControl");
+
             GameObject player = GameObject.FindWithTag("Player");
             player.GetComponent<PlayerController>().enabled = true;
         }
