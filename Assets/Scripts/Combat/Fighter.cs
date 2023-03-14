@@ -64,8 +64,6 @@ namespace RPG.Combat
                 _animator.ResetTrigger("stopAttack");
                 //rotate around Y axis to look at the target
                 transform.LookAt(new Vector3(_combatTarget.transform.position.x, transform.position.y, _combatTarget.transform.position.z));
-
-
             }
         }
 
@@ -104,6 +102,7 @@ namespace RPG.Combat
         public void Cancel()
         {
             _combatTarget = null;
+            _mover.Cancel();
             CancelAttackAnimations();
         }
 
