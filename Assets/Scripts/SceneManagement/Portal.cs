@@ -18,6 +18,8 @@ namespace RPG.SceneManagement
         [SerializeField] int _sceneToLoad = -1;
         [SerializeField] Transform _spawnPoint;
         [SerializeField] DestinationIdentifier _destinationPortal;
+        [SerializeField] float _fadeOutTime = 1.5f;
+        [SerializeField] float _fadeInTime = 1.5f;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -37,12 +39,22 @@ namespace RPG.SceneManagement
                 yield break;
             }
 
+            Debug.Log("Transition!!");
+
             DontDestroyOnLoad(gameObject);
 
+            Fader fader = FindObjectOfType<Fader>();
+            Debug.Log("Fader: " + fader);
+            yield return fader.FadeOut(_fadeOutTime);
+            Debug.Log("Fade out done");
             yield return SceneManager.LoadSceneAsync(_sceneToLoad); ;
 
             Portal otherPortal = GetOtherPortal();
             UpdatePlayer(otherPortal);
+
+            yield return fader.FadeIn(_fadeInTime);
+            Debug.Log("Fade in done");
+
             Destroy(gameObject);
         }
 

@@ -306,7 +306,37 @@ PrefabInstance:
       propertyPath: m_Name
       value: Core
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6178506627652665580, guid: cbf0a850e8b363f4ebd9cf0e8cc1221d,
+        type: 3}
+      propertyPath: persistenObjectPrefab
+      value: 
+      objectReference: {fileID: 5039267929743509876, guid: 5338444c424343a4687acc10bd4c941b,
+        type: 3}
+    - target: {fileID: 6178506627652665580, guid: cbf0a850e8b363f4ebd9cf0e8cc1221d,
+        type: 3}
+      propertyPath: _persistenObjectPrefab
+      value: 
+      objectReference: {fileID: 5039267929743509876, guid: 5338444c424343a4687acc10bd4c941b,
+        type: 3}
+    - target: {fileID: 6178506627652665580, guid: cbf0a850e8b363f4ebd9cf0e8cc1221d,
+        type: 3}
+      propertyPath: _persistenObjectPrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6178506627652665580, guid: cbf0a850e8b363f4ebd9cf0e8cc1221d,
+        type: 3}
+      propertyPath: _persistenObjectPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 1488162937207950614, guid: 74c7a62aa465b4b479024c701157449d,
+        type: 3}
+    - target: {fileID: 7035369381458791751, guid: cbf0a850e8b363f4ebd9cf0e8cc1221d,
+        type: 3}
+      propertyPath: persistenObjectPrefab
+      value: 
+      objectReference: {fileID: 5039267929743509876, guid: 5338444c424343a4687acc10bd4c941b,
+        type: 3}
+    m_RemovedComponents:
+    - {fileID: 7035369381458791751, guid: cbf0a850e8b363f4ebd9cf0e8cc1221d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cbf0a850e8b363f4ebd9cf0e8cc1221d, type: 3}
 --- !u!1001 &705369641
 PrefabInstance:

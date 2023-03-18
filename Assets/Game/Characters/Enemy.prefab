@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 339130377935470038, guid: 483a9a925c2bf754a83105157142db6c,
         type: 3}
       propertyPath: m_Name
-      value: Enemy (1)
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 339130377935470040, guid: 483a9a925c2bf754a83105157142db6c,
         type: 3}
@@ -116,6 +116,16 @@ PrefabInstance:
         type: 3}
       propertyPath: _currentHealth
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8629443617792864955, guid: 483a9a925c2bf754a83105157142db6c,
+        type: 3}
+      propertyPath: _maxHealth
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8629443617792864955, guid: 483a9a925c2bf754a83105157142db6c,
+        type: 3}
+      propertyPath: _currentHealth
+      value: 25
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5391961816306660365, guid: 483a9a925c2bf754a83105157142db6c, type: 3}
