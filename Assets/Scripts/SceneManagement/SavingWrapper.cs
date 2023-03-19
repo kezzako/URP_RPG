@@ -1,18 +1,24 @@
+using GameDevTV.Saving;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SavingWrapper : MonoBehaviour
+namespace RPG.SceneManagement
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public class SavingWrapper : MonoBehaviour
     {
-        
+        const string _defaultSaveFile = "save";
+
+        public void Save()
+        {
+            GetComponent<JsonSavingSystem>().Save(_defaultSaveFile);
+        }
+
+        public void Load()
+        {
+            GetComponent<JsonSavingSystem>().Load(_defaultSaveFile);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

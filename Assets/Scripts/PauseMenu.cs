@@ -36,6 +36,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1;
         EnableControl();
         pauseMenuUI.SetActive(false);
+        Debug.Log(pauseMenuUI);
 
     }
 
@@ -54,7 +55,6 @@ public class PauseMenu : MonoBehaviour
     {
         Debug.Log("DisableControl");
         GameObject player = GameObject.FindWithTag("Player");
-        Debug.Log(player);
         player.GetComponent<PlayerController>().enabled = false;
 
     }
