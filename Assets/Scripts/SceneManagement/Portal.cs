@@ -19,7 +19,7 @@ namespace RPG.SceneManagement
         [SerializeField] Transform _spawnPoint;
         [SerializeField] DestinationIdentifier _destinationPortal;
         [SerializeField] float _fadeOutTime = 1.5f;
-        [SerializeField] float _fadeInTime = 1.5f;
+        [SerializeField] float _fadeInTime = 0.75f;
 
         private void OnTriggerEnter(Collider other)
         {

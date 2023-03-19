@@ -6,6 +6,7 @@ using RPG.Movement;
 using System;
 using RPG.Combat;
 using RPG.Core;
+using UnityEngine.EventSystems;
 
 namespace RPG.Control
 {
@@ -34,12 +35,10 @@ namespace RPG.Control
         public bool DoCombat()
         {
             RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
-
+            
             foreach (RaycastHit hit in hits)
             {
                 CombatTarget target = hit.transform.gameObject.GetComponent<CombatTarget>();
-
-                //Debug.Log(target);
 
                 //skip iteration if no target
                 if (target == null) continue;
@@ -50,8 +49,8 @@ namespace RPG.Control
                 if (Mouse.current.leftButton.IsPressed())
                 {
                     GetComponent<Fighter>().Attack(target.gameObject);
-
                 }
+
                 return true; //return true even if just hovering over a valid target
             }
             return false;
@@ -78,23 +77,6 @@ namespace RPG.Control
         {
             return Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
         }
-
-        //public void OnClick(InputAction.CallbackContext context)
-        //{
-        //    if (context.started)
-        //    {
-        //        _wantsToRun = true; //start moving
-        //    }
-        //    //enter here once the hold period expires
-        //    else if (context.performed)
-        //    {
-        //        _wantsToRun = true; //keep moving on hold
-        //    }
-        //    else if (context.canceled)
-        //    {
-        //        _wantsToRun = false; //stop moving on button release
-        //    }
-        //}
     }
 
 }
