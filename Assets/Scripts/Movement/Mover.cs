@@ -5,10 +5,13 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using RPG.Core;
+using GameDevTV.Saving;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace RPG.Movement
 {
-    public class Mover : MonoBehaviour, IActions
+    public class Mover : MonoBehaviour, IActions, IJsonSaveable
     {
         NavMeshAgent _navMeshAgent;
         Animator _animator;
@@ -69,6 +72,32 @@ namespace RPG.Movement
             _navMeshAgent.speed = speed;
         }
 
+        public JToken CaptureAsJToken()
+        {
+            var newArr = new float[3]
+            {
+                transform.position.x,
+                transform.position.y,
+                transform.position.z
+            };
+
+            return JToken.FromObject(newArr);
+            //Debug.Log("Transform: " + transform.position);
+            //return JToken.FromObject(new SerializableVector3(transform.position));
+        }
+
+        public void RestoreFromJToken(JToken state)
+        {
+            _navMeshAgent.enabled = false;
+
+            var jsonArr = state.ToObject<float[]>();
+            Vector3 vect3 = new Vector3(jsonArr[0], jsonArr[1], jsonArr[2]);
+            transform.position = vect3;
+
+            _navMeshAgent.enabled = true;
+            GetComponent<ActionScheduler>().CancelCurrentAction();
+            //this.gameObject.transform = state.ToObject<Transform>();
+        }
     }
 
 }

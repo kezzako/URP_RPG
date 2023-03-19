@@ -24,7 +24,6 @@ namespace RPG.Core
         {
             _currentHealth = _maxHealth;
             _animator = GetComponent<Animator>();
-
         }
 
         public void takeDamage(float damage)
