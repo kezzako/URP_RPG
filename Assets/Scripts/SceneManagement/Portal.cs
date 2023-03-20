@@ -21,6 +21,14 @@ namespace RPG.SceneManagement
         [SerializeField] float _fadeOutTime = 1.5f;
         [SerializeField] float _fadeInTime = 0.75f;
 
+
+        //SavingWrapper _wrapper;
+
+        //private void Start()
+        //{
+        //    _wrapper = FindObjectOfType<SavingWrapper>();
+        //    Debug.Log(_wrapper);
+        //}
         private void OnTriggerEnter(Collider other)
         {
             Debug.Log("Portal triggered");
@@ -46,14 +54,19 @@ namespace RPG.SceneManagement
             Fader fader = FindObjectOfType<Fader>();
             Debug.Log("Fader: " + fader);
             yield return fader.FadeOut(_fadeOutTime);
-            Debug.Log("Fade out done");
-            yield return SceneManager.LoadSceneAsync(_sceneToLoad); ;
+            print("Save");
+            SavingWrapper wrapper = FindObjectOfType<SavingWrapper>();
+            DontDestroyOnLoad(wrapper);
+
+            wrapper.Save();
+            yield return SceneManager.LoadSceneAsync(_sceneToLoad);
+            print("load");
+            wrapper.Load();
 
             Portal otherPortal = GetOtherPortal();
             UpdatePlayer(otherPortal);
 
             yield return fader.FadeIn(_fadeInTime);
-            Debug.Log("Fade in done");
 
             Destroy(gameObject);
         }
@@ -81,6 +94,11 @@ namespace RPG.SceneManagement
             }
 
             return null;
+        }
+
+        private void OnDestroy()
+        {
+            print("Portal destroyed");
         }
     }
 }

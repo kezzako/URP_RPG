@@ -5,11 +5,13 @@ using RPG.Combat;
 using RPG.Core;
 using RPG.Movement;
 using System;
+using GameDevTV.Saving;
+using Newtonsoft.Json.Linq;
 
 namespace RPG.Control
 {
 
-    public class AIController : MonoBehaviour
+    public class AIController : MonoBehaviour, IJsonSaveable
     {
         [SerializeField] PatrolPath _patrolPath; //assign  in the editor the patrol path you want the guard to follow
 
@@ -19,7 +21,6 @@ namespace RPG.Control
         Mover _mover;
         ActionScheduler _actionScheduler;
         
-
         Vector3 _guardPosition;             //the position we are guarding. Always end up returning here
         float _chaseDistance = 3f;          //radius within which will chase player
         float _chaseSpeed = 5f;             //speed at which will chase player
@@ -31,6 +32,16 @@ namespace RPG.Control
         float _waypointDwellTime = 3f;      //seconds we stop at every waypoint during patrol
         float _arrivedAtWaypointTimestamp = float.MinValue;
 
+        float _timeSinceStart = 0; //use this to control time because when we load a scene we want out time reset too
+
+        public struct saveables
+        {
+            public float lastSawPlayerTimestamp { get; set; }
+            public float arrivedAtWaypointTimestamp { get; set; }
+            public int currentWaypointIndex { get; set; }
+        }
+
+        saveables _saveables;
 
         private void Awake()
         {
@@ -49,15 +60,17 @@ namespace RPG.Control
 
         private void Update()
         {
+            _timeSinceStart += Time.deltaTime;
+
             if (_health.IsDead()) return;
 
             if (InAttackRangeOfPlayer(_chaseDistance) && _fighter.CanAttack(_player))
             {
-                _lastSawPlayerTimestamp = Time.time;
+                _lastSawPlayerTimestamp = _timeSinceStart;
                 AttackBehavior();
             }
             //if suspicionTime has not elapsed yet, we stand there
-            else if ((Time.time - _lastSawPlayerTimestamp) < _suspicionTime)
+            else if ((_timeSinceStart - _lastSawPlayerTimestamp) < _suspicionTime)
             {
                 SuspicionBehavior();
             }
@@ -75,10 +88,10 @@ namespace RPG.Control
             if(_patrolPath != null)
             {
                 //if at waypoint and waypoint dwelltime elapsed, set next waypoint
-                if (AtWaypoint() && ((Time.time - _arrivedAtWaypointTimestamp) > _waypointDwellTime))
+                if (AtWaypoint() && ((_timeSinceStart - _arrivedAtWaypointTimestamp) > _waypointDwellTime))
                 {
                     CycleWaypoint();
-                    _arrivedAtWaypointTimestamp = Time.time;
+                    _arrivedAtWaypointTimestamp = _timeSinceStart;
                 }
                 nextPosition = GetCurrentWaypoint();
             }
@@ -128,6 +141,23 @@ namespace RPG.Control
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, _chaseDistance);
+        }
+
+        public JToken CaptureAsJToken()
+        {
+            _saveables.currentWaypointIndex = _currentWaypointIndex;
+            _saveables.arrivedAtWaypointTimestamp = _arrivedAtWaypointTimestamp;
+            _saveables.lastSawPlayerTimestamp = _lastSawPlayerTimestamp;
+            return JToken.FromObject(_saveables);
+        }
+
+        public void RestoreFromJToken(JToken state)
+        {
+            _saveables = state.ToObject<saveables>();
+
+            _currentWaypointIndex = _saveables.currentWaypointIndex;
+            _arrivedAtWaypointTimestamp = _saveables.arrivedAtWaypointTimestamp;
+            _lastSawPlayerTimestamp = _saveables.lastSawPlayerTimestamp;
         }
     }
 

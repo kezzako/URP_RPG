@@ -55,6 +55,18 @@ namespace RPG.Core
         {
             _currentHealth = state.ToObject<float>();
             //UpdateState();
+            if (_currentHealth <= 0)
+            {
+                _currentHealth = 0;
+                Die();
+            }
+
+            if(_currentHealth > 0)
+            {
+                _isDead = false;
+                _animator.ResetTrigger("die");
+                _animator.SetTrigger("revive");
+            }
         }
 
     }
