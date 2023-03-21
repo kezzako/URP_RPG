@@ -25,6 +25,7 @@ namespace ROG.Core
             foreach(GameObject prefab in _persistenObjectPrefabs)
             {
                 Instantiate(prefab);
+                print("initiating: " + prefab.name);
                 DontDestroyOnLoad(prefab);
             }
         }

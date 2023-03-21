@@ -62,7 +62,6 @@ namespace RPG.SceneManagement
         {
             Debug.Log("DisableControl");
             GameObject player = GameObject.FindWithTag("Player");
-            Debug.Log(player);
             player.GetComponent<ActionScheduler>().CancelCurrentAction();
             player.GetComponent<PlayerController>().enabled = false;
 

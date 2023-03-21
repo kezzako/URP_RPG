@@ -54,14 +54,16 @@ namespace RPG.Core
         public void RestoreFromJToken(JToken state)
         {
             _currentHealth = state.ToObject<float>();
-            //UpdateState();
+
             if (_currentHealth <= 0)
             {
                 _currentHealth = 0;
                 Die();
             }
 
-            if(_currentHealth > 0)
+            //if we save, kill a guy, then load we need to revive the guy so
+            //he doesn't stay in "dead" animation state
+            if(_currentHealth > 0 && _isDead)
             {
                 _isDead = false;
                 _animator.ResetTrigger("die");

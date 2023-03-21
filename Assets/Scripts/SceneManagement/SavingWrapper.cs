@@ -10,6 +10,12 @@ namespace RPG.SceneManagement
     {
         const string _defaultSaveFile = "save";
 
+        //IEnumerator Start()
+        //{
+        //    print("heyo");
+        //    yield return GetComponent<JsonSavingSystem>().LoadLastScene(_defaultSaveFile);
+        //}
+
         public void Save()
         {
             GetComponent<JsonSavingSystem>().Save(_defaultSaveFile);
