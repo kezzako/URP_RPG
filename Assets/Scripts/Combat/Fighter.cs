@@ -8,6 +8,9 @@ namespace RPG.Combat
 {
     public class Fighter : MonoBehaviour, IActions
     {
+        [SerializeField] GameObject _weaponPrefab = null;
+        [SerializeField] Transform _handTransform = null;
+
         float _weaponRange = 1f;
         float _weaponDamage = 5f;
 

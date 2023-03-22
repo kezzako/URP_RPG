@@ -17,8 +17,6 @@ namespace RPG.Movement
         Animator _animator;
         Health _health;
 
-        //bool _wantsToRun = false;
-
         private void Awake()
         {
             _navMeshAgent = GetComponent<NavMeshAgent>();
@@ -72,16 +70,30 @@ namespace RPG.Movement
             _navMeshAgent.speed = speed;
         }
 
+        public struct moverSaveData
+        {
+            public float[] position;
+            public float[] quarternions;
+        }
+
         public JToken CaptureAsJToken()
         {
-            var newArr = new float[3]
+            moverSaveData saveData = new()
             {
-                transform.position.x,
-                transform.position.y,
-                transform.position.z
+                position = new float[3],
+                quarternions = new float[4]
             };
 
-            return JToken.FromObject(newArr);
+            saveData.position[0] = transform.position.x;
+            saveData.position[1] = transform.position.y;
+            saveData.position[2] = transform.position.z;
+
+            saveData.quarternions[0] = transform.rotation.x;
+            saveData.quarternions[1] = transform.rotation.y;
+            saveData.quarternions[2] = transform.rotation.z;
+            saveData.quarternions[3] = transform.rotation.w;
+
+            return JToken.FromObject(saveData);
             //Debug.Log("Transform: " + transform.position);
             //return JToken.FromObject(new SerializableVector3(transform.position));
         }
@@ -90,9 +102,26 @@ namespace RPG.Movement
         {
             _navMeshAgent.enabled = false;
 
-            var jsonArr = state.ToObject<float[]>();
-            Vector3 vect3 = new Vector3(jsonArr[0], jsonArr[1], jsonArr[2]);
-            transform.position = vect3;
+            moverSaveData saveData = new()
+            {
+                position = new float[3],
+                quarternions = new float[4]
+            };
+
+            saveData = state.ToObject<moverSaveData>();
+
+            transform.position = new Vector3(
+                saveData.position[0], //x
+                saveData.position[1], //y
+                saveData.position[2]  //z
+                );
+
+            transform.rotation = new Quaternion(
+                saveData.quarternions[0], //x
+                saveData.quarternions[1], //y
+                saveData.quarternions[2], //z
+                saveData.quarternions[3]  //w
+                );
 
             _navMeshAgent.enabled = true;
             GetComponent<ActionScheduler>().CancelCurrentAction();
