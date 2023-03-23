@@ -149,6 +149,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d96088dd009af34588ce83c1e519208, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _weaponPrefab: {fileID: 0}
+  _handTransform: {fileID: 0}
 --- !u!114 &339130377935470019
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using RPG.Movement;
 using RPG.Core;
+using System;
 
 namespace RPG.Combat
 {
@@ -27,6 +28,11 @@ namespace RPG.Combat
         {
             _mover = GetComponent<Mover>();
             _animator = GetComponent<Animator>();
+        }
+
+        private void Start()
+        {
+            SpawnWeapon();
         }
 
         private void Update()
@@ -100,6 +106,14 @@ namespace RPG.Combat
         private bool IsInRange()
         {
             return Vector3.Distance(transform.position, _combatTarget.transform.position) < _weaponRange;
+        }
+
+        private void SpawnWeapon()
+        {
+            if(_weaponPrefab != null && _handTransform != null) 
+            {
+                Instantiate(_weaponPrefab, _handTransform);
+            }
         }
 
         public void Cancel()
