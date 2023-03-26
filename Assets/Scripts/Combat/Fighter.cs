@@ -11,11 +11,12 @@ namespace RPG.Combat
     {
         [SerializeField] GameObject _weaponPrefab = null;
         [SerializeField] Transform _handTransform = null;
+        [SerializeField] AnimatorOverrideController _animOverrController;
 
         float _weaponRange = 1f;
         float _weaponDamage = 5f;
 
-        float _timeBetweenAttackAnimCycles = 0.5f;
+        float _timeBetweenAttackAnimCycles = 1;
         float _lastAttackTimeStamp = float.MinValue;
 
         bool _isDoingAttackAnimation = false;
@@ -43,10 +44,19 @@ namespace RPG.Combat
             if (_combatTarget.IsDead())
             {
                 CancelAttackAnimations();
+                //when we kill the enemy we immediately return to locomotion with some speed
+                //with this we return to idle animation
+                _mover.Cancel();
                 return;
             }
             if (!IsInRange())// && !_isDoingAttackAnimation)
             {
+                if (this.CompareTag("Player"))
+                {
+                    Debug.Log("Cancel attack");
+
+                }
+
                 CancelAttackAnimations();
 
                 if (!_isDoingAttackAnimation)
@@ -113,7 +123,10 @@ namespace RPG.Combat
             if(_weaponPrefab != null && _handTransform != null) 
             {
                 Instantiate(_weaponPrefab, _handTransform);
+                _animator.runtimeAnimatorController = _animOverrController;
+
             }
+
         }
 
         public void Cancel()

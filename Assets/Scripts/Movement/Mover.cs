@@ -18,7 +18,6 @@ namespace RPG.Movement
         Health _health;
 
         float _navSpeed = 0;
-
         private void Awake()
         {
             _navMeshAgent = GetComponent<NavMeshAgent>();
@@ -48,20 +47,13 @@ namespace RPG.Movement
             else forwardSpeed = _navSpeed;
          
             _animator.SetFloat("forwardSpeed", forwardSpeed);
-
+            //if (this.name == "Player")
+            //{
+            //    Debug.Log(forwardSpeed + " " + distanceToDest);
+            //}
             //Vector3 velocity = _navMeshAgent.velocity;
             //Vector3 localVelocity = transform.InverseTransformDirection(velocity);
             //_animator.SetFloat("forwardSpeed", localVelocity.z);
-        }
-
-        private void OnAnimatorMove()
-        {
-            AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-            _navMeshAgent.speed = (_animator.deltaPosition / Time.deltaTime).magnitude;
-            if (!stateInfo.IsName("Locomotion"))
-            {
-                _animator.ApplyBuiltinRootMotion();
-            }
         }
 
         public void StartMoveAction(Vector3 destination)
