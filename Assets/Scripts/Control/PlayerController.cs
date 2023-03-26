@@ -16,6 +16,8 @@ namespace RPG.Control
         Fighter _fighter;
         Health _health;
 
+        float _runSpeed = 5.66f;
+
         private void Awake()
         {
             _mover = GetComponent<Mover>();
@@ -65,6 +67,8 @@ namespace RPG.Control
             {
                 if (Mouse.current.leftButton.IsPressed())
                 {
+                    _mover.SetNavSpeed(_runSpeed);
+
                     _mover.StartMoveAction(hit.point);
                 }
                 return true;

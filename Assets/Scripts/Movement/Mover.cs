@@ -17,6 +17,8 @@ namespace RPG.Movement
         Animator _animator;
         Health _health;
 
+        float _navSpeed = 0;
+
         private void Awake()
         {
             _navMeshAgent = GetComponent<NavMeshAgent>();
@@ -36,9 +38,30 @@ namespace RPG.Movement
 
         private void UpdateAnimator()
         {
-            Vector3 velocity = _navMeshAgent.velocity;
-            Vector3 localVelocity = transform.InverseTransformDirection(velocity);
-            _animator.SetFloat("forwardSpeed", localVelocity.z);
+            if (!_navMeshAgent.isOnNavMesh) return;
+
+            float forwardSpeed = 0;
+
+            float distanceToDest = _navMeshAgent.remainingDistance;
+
+            if (distanceToDest < 0.05) forwardSpeed = 0f;
+            else forwardSpeed = _navSpeed;
+         
+            _animator.SetFloat("forwardSpeed", forwardSpeed);
+
+            //Vector3 velocity = _navMeshAgent.velocity;
+            //Vector3 localVelocity = transform.InverseTransformDirection(velocity);
+            //_animator.SetFloat("forwardSpeed", localVelocity.z);
+        }
+
+        private void OnAnimatorMove()
+        {
+            AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+            _navMeshAgent.speed = (_animator.deltaPosition / Time.deltaTime).magnitude;
+            if (!stateInfo.IsName("Locomotion"))
+            {
+                _animator.ApplyBuiltinRootMotion();
+            }
         }
 
         public void StartMoveAction(Vector3 destination)
@@ -50,6 +73,7 @@ namespace RPG.Movement
         public void Cancel()
         {
             _navMeshAgent.isStopped = true;
+            _navMeshAgent.destination = transform.position;
             //Debug.Log("stop mover" + gameObject.name);
         }
 
@@ -67,7 +91,9 @@ namespace RPG.Movement
 
         public void SetNavSpeed(float speed)
         {
-            _navMeshAgent.speed = speed;
+            //_navMeshAgent.speed = speed;
+            _navSpeed = speed;
+            //_animator.SetFloat("forwardSpeed", speed);
         }
 
         public struct moverSaveData

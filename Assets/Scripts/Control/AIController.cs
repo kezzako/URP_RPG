@@ -84,8 +84,8 @@ namespace RPG.Control
         private void PatrolBehavior()
         {
             Vector3 nextPosition = _guardPosition;
-
-            if(_patrolPath != null)
+            _mover.SetNavSpeed(_patrolSpeed);
+            if (_patrolPath != null)
             {
                 //if at waypoint and waypoint dwelltime elapsed, set next waypoint
                 if (AtWaypoint() && ((_timeSinceStart - _arrivedAtWaypointTimestamp) > _waypointDwellTime))
