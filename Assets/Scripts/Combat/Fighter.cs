@@ -9,12 +9,10 @@ namespace RPG.Combat
 {
     public class Fighter : MonoBehaviour, IActions
     {
-        [SerializeField] GameObject _weaponPrefab = null;
+        //[SerializeField] GameObject _weaponPrefab = null;
         [SerializeField] Transform _handTransform = null;
-        [SerializeField] AnimatorOverrideController _animOverrController;
-
-        float _weaponRange = 1f;
-        float _weaponDamage = 5f;
+        //[SerializeField] AnimatorOverrideController _animOverrController;
+        [SerializeField] Weapon _weapon = null;
 
         float _timeBetweenAttackAnimCycles = 1;
         float _lastAttackTimeStamp = float.MinValue;
@@ -104,7 +102,7 @@ namespace RPG.Combat
         {
             if(_combatTarget == null) return;
 
-            _combatTarget.takeDamage(_weaponDamage);
+            _combatTarget.takeDamage(_weapon.GetDamage());
         }
 
         //animation event
@@ -115,18 +113,17 @@ namespace RPG.Combat
 
         private bool IsInRange()
         {
-            return Vector3.Distance(transform.position, _combatTarget.transform.position) < _weaponRange;
+            Debug.Log(_weapon.GetRange());
+            return Vector3.Distance(transform.position, _combatTarget.transform.position) < _weapon.GetRange();
         }
 
         private void SpawnWeapon()
         {
-            if(_weaponPrefab != null && _handTransform != null) 
+            if(_weapon != null && _handTransform != null) 
             {
-                Instantiate(_weaponPrefab, _handTransform);
-                _animator.runtimeAnimatorController = _animOverrController;
-
+                //Instantiate(_weaponPrefab, _handTransform);
+                _weapon.Spawn(_handTransform, _animator);
             }
-
         }
 
         public void Cancel()
@@ -147,7 +144,7 @@ namespace RPG.Combat
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(transform.position, _weaponRange);
+            Gizmos.DrawWireSphere(transform.position, _weapon.GetRange());
         }
     }
 }
