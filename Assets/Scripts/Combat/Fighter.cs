@@ -9,10 +9,9 @@ namespace RPG.Combat
 {
     public class Fighter : MonoBehaviour, IActions
     {
-        //[SerializeField] GameObject _weaponPrefab = null;
         [SerializeField] Transform _handTransform = null;
-        //[SerializeField] AnimatorOverrideController _animOverrController;
-        [SerializeField] Weapon _weapon = null;
+        [SerializeField] Weapon _defaultWeapon = null;
+        Weapon _currentWeapon = null;
 
         float _timeBetweenAttackAnimCycles = 1;
         float _lastAttackTimeStamp = float.MinValue;
@@ -31,7 +30,7 @@ namespace RPG.Combat
 
         private void Start()
         {
-            SpawnWeapon();
+            EquipWeapon(_defaultWeapon);
         }
 
         private void Update()
@@ -87,7 +86,7 @@ namespace RPG.Combat
         public bool CanAttack(GameObject combatTarget)
         {
             //return false is target is null or dead
-            if(combatTarget == null || combatTarget.GetComponent<Health>().IsDead()) return false;
+            if (combatTarget == null || combatTarget.GetComponent<Health>().IsDead()) return false;
             else return true;
         }
 
@@ -100,9 +99,9 @@ namespace RPG.Combat
         //Punch attack animation event
         void Hit()
         {
-            if(_combatTarget == null) return;
+            if (_combatTarget == null) return;
 
-            _combatTarget.takeDamage(_weapon.GetDamage());
+            _combatTarget.takeDamage(_currentWeapon.GetDamage());
         }
 
         //animation event
@@ -113,16 +112,17 @@ namespace RPG.Combat
 
         private bool IsInRange()
         {
-            Debug.Log(_weapon.GetRange());
-            return Vector3.Distance(transform.position, _combatTarget.transform.position) < _weapon.GetRange();
+            return Vector3.Distance(transform.position, _combatTarget.transform.position) < _currentWeapon.GetRange();
         }
 
-        private void SpawnWeapon()
+        public void EquipWeapon(Weapon weapon)
         {
-            if(_weapon != null && _handTransform != null) 
+            _currentWeapon = weapon;
+
+            if (weapon != null && _handTransform != null)
             {
                 //Instantiate(_weaponPrefab, _handTransform);
-                _weapon.Spawn(_handTransform, _animator);
+                weapon.Spawn(_handTransform, _animator);
             }
         }
 
@@ -143,8 +143,11 @@ namespace RPG.Combat
 
         private void OnDrawGizmosSelected()
         {
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(transform.position, _weapon.GetRange());
+            if (_currentWeapon != null)
+            {
+                Gizmos.color = Color.green;
+                Gizmos.DrawWireSphere(transform.position, _currentWeapon.GetRange());
+            }
         }
     }
 }
