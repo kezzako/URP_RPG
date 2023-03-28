@@ -18,3 +18,4 @@ MonoBehaviour:
     type: 3}
   _range: 2
   _damage: 5
+  _isRightHanded: 1

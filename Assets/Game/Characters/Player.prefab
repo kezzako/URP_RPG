@@ -72,6 +72,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 339130377935470044, guid: 483a9a925c2bf754a83105157142db6c,
+        type: 3}
+      propertyPath: _defaultWeapon
+      value: 
+      objectReference: {fileID: 11400000, guid: f6d84c8c9d748a348a482f34724b6d95,
+        type: 2}
+    - target: {fileID: 339130377935470044, guid: 483a9a925c2bf754a83105157142db6c,
+        type: 3}
+      propertyPath: _leftHandTransform
+      value: 
+      objectReference: {fileID: 9092537511548416152}
+    - target: {fileID: 339130377935470044, guid: 483a9a925c2bf754a83105157142db6c,
+        type: 3}
+      propertyPath: _rightHandTransform
+      value: 
+      objectReference: {fileID: 9092537511548342426}
     - target: {fileID: 339130377935470045, guid: 483a9a925c2bf754a83105157142db6c,
         type: 3}
       propertyPath: m_Enabled
@@ -138,3 +154,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7696ca8f948186549a900f24e314f0b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &9092537511548342426 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4697145967422347625, guid: 483a9a925c2bf754a83105157142db6c,
+    type: 3}
+  m_PrefabInstance: {fileID: 4539826266364103155}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &9092537511548416152 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4697145967422421355, guid: 483a9a925c2bf754a83105157142db6c,
+    type: 3}
+  m_PrefabInstance: {fileID: 4539826266364103155}
+  m_PrefabAsset: {fileID: 0}

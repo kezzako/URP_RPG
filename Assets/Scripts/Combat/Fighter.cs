@@ -9,7 +9,9 @@ namespace RPG.Combat
 {
     public class Fighter : MonoBehaviour, IActions
     {
-        [SerializeField] Transform _handTransform = null;
+        [SerializeField] Transform _rightHandTransform = null;
+        [SerializeField] Transform _leftHandTransform = null;
+
         [SerializeField] Weapon _defaultWeapon = null;
         Weapon _currentWeapon = null;
 
@@ -119,10 +121,10 @@ namespace RPG.Combat
         {
             _currentWeapon = weapon;
 
-            if (weapon != null && _handTransform != null)
+            if (weapon != null && _rightHandTransform != null)
             {
-                //Instantiate(_weaponPrefab, _handTransform);
-                weapon.Spawn(_handTransform, _animator);
+                //Instantiate(_weaponPrefab, _rightHandTransform);
+                weapon.Spawn(_rightHandTransform, _leftHandTransform, _animator);
             }
         }
 
