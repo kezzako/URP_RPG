@@ -7,5 +7,17 @@ AnimatorOverrideController:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Bow Animator Override
-  m_Controller: {fileID: 0}
-  m_Clips: []
+  m_Controller: {fileID: 9100000, guid: c50bcd23872b219478f64f6a8bd655c9, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 1f0259f8be521484a84b2bb9df85d17f, type: 3}
+    m_OverrideClip: {fileID: -1169289577551834828, guid: 9cbb2a4d135c31e4cbeadac255ba4ecb,
+      type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 52c557d681ff300439bddbc21b562f65, type: 3}
+    m_OverrideClip: {fileID: -1169289577551834828, guid: 9cbb2a4d135c31e4cbeadac255ba4ecb,
+      type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 14777980c2b95094ba2ba74bca1115cc, type: 3}
+    m_OverrideClip: {fileID: -1169289577551834828, guid: 9cbb2a4d135c31e4cbeadac255ba4ecb,
+      type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 8f1e195a03f6db44489e39fb2648ee1d, type: 3}
+    m_OverrideClip: {fileID: -1169289577551834828, guid: 9cbb2a4d135c31e4cbeadac255ba4ecb,
+      type: 3}

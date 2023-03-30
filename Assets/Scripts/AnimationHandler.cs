@@ -16,17 +16,27 @@ public class AnimationHandler : MonoBehaviour
 
     private void OnAnimatorMove()
     {
-        AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-        _navMeshAgent.speed = (_animator.deltaPosition / Time.deltaTime).magnitude;
-
-        if (!stateInfo.IsName("Locomotion") //&&
-        //    !stateInfo.IsName("AttackRightPunch") &&
-        //    !stateInfo.IsName("AttackLeftPunch") &&
-        //    !stateInfo.IsName("AttackRightPunch2") &&
-        //    !stateInfo.IsName("AttackLeftPunch2")
-            )
+        //no need during pause
+        if (Time.timeScale > 0)
         {
-            _animator.ApplyBuiltinRootMotion();
+            AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+            float navmeshSpeed = (_animator.deltaPosition / Time.deltaTime).magnitude;
+
+            //on the 1st frame exiting pause navmeshSpeed returns NaN, resulting in errors
+            if (!float.IsNaN(navmeshSpeed))
+            {
+                _navMeshAgent.speed = navmeshSpeed;
+            }
+
+            if (!stateInfo.IsName("Locomotion") //&&
+                                                //    !stateInfo.IsName("AttackRightPunch") &&
+                                                //    !stateInfo.IsName("AttackLeftPunch") &&
+                                                //    !stateInfo.IsName("AttackRightPunch2") &&
+                                                //    !stateInfo.IsName("AttackLeftPunch2")
+                                                                                            )
+            {
+                _animator.ApplyBuiltinRootMotion();
+            }
         }
     }
 }
