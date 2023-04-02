@@ -1,3 +1,4 @@
+using RPG.Core;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ namespace RPG.Combat
         [SerializeField] float _range = 1f;
         [SerializeField] float _damage = 5f;
         [SerializeField] bool _isRightHanded = true;
+        [SerializeField] Projectile _projectile = null;
 
         public void Spawn(Transform rightHand, Transform leftHand, Animator animator)
         {
@@ -34,6 +36,21 @@ namespace RPG.Combat
         public float GetDamage()
         {
             return _damage;
+        }
+
+        public void LaunchProjectile(Transform rightHand, Transform leftHand, Health target)
+        {
+            Vector3 spawnPos = (_isRightHanded ? rightHand : leftHand).position;
+            Quaternion spawnRot = (_isRightHanded ? rightHand : leftHand).rotation;
+            Projectile projectileInstance = Instantiate(_projectile, spawnPos, spawnRot);
+
+            projectileInstance.SetDamage(_damage);
+            projectileInstance.SetTarget(target);
+        }
+
+        public bool HasProjectile()
+        {
+            return _projectile != null;
         }
 
     }

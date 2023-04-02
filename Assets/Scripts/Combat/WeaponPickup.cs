@@ -9,8 +9,6 @@ public class WeaponPickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("oauidoisuad");
-
         if (other.CompareTag("Player"))
         {
             Fighter fighter = other.GetComponent<Fighter>();

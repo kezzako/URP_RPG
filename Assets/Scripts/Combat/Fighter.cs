@@ -112,6 +112,16 @@ namespace RPG.Combat
             _isDoingAttackAnimation = false;
         }
 
+        //BowShotWithAnimEvent animation event
+        void Shoot()
+        {
+            if(_combatTarget == null) return;
+            if (_currentWeapon.HasProjectile())
+            {
+                _currentWeapon.LaunchProjectile(_rightHandTransform, _leftHandTransform, _combatTarget);
+            }
+        }
+
         private bool IsInRange()
         {
             return Vector3.Distance(transform.position, _combatTarget.transform.position) < _currentWeapon.GetRange();
