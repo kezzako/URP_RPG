@@ -50,12 +50,6 @@ namespace RPG.Combat
             }
             if (!IsInRange())// && !_isDoingAttackAnimation)
             {
-                if (this.CompareTag("Player"))
-                {
-                    Debug.Log("Cancel attack");
-
-                }
-
                 CancelAttackAnimations();
 
                 if (!_isDoingAttackAnimation)

@@ -10,11 +10,12 @@ public class Projectile : MonoBehaviour
     [SerializeField] float _speed = 15f;
     float _damage = 0;
 
-    // Update is called once per frame
+    public event Action<Projectile> CollisionEvent;
+
     void FixedUpdate()
     {
         if (_target == null) return;
-
+        
         transform.LookAt(GetAimLocation());
         transform.Translate(Vector3.forward * _speed * Time.deltaTime);
     }
@@ -43,8 +44,13 @@ public class Projectile : MonoBehaviour
     {
         if(GameObject.ReferenceEquals(other.gameObject, _target.gameObject))
         {
+            //in weapon.cs we subscribe to this and
+            //trelease the projecile back into the pool.
+            CollisionEvent?.Invoke(this);
+
             _target.takeDamage(_damage);
-            Destroy(gameObject);
+
+            //Destroy(this.gameObject);
         }
     }
 }

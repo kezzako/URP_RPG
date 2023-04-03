@@ -16,8 +16,9 @@ MonoBehaviour:
     type: 2}
   _weaponPrefab: {fileID: 5336833220527061765, guid: d585c90d265e0bf4b9f3e1429e8bcf7f,
     type: 3}
-  _range: 10.1
+  _range: 10
   _damage: 10
   _isRightHanded: 0
   _projectile: {fileID: -7061304179188584118, guid: a4bcf800748540e44b08b63f5822c1e8,
     type: 3}
+  _maxPoolSize: 10
