@@ -22,10 +22,10 @@ namespace RPG.Control
         ActionScheduler _actionScheduler;
         
         Vector3 _guardPosition;             //the position we are guarding. Always end up returning here
-        float _chaseDistance = 3f;          //radius within which will chase player
-        float _chaseSpeed = 5f;             //speed at which will chase player
-        float _patrolSpeed = 3f;            //speed when we are not chasing player (patrol, suspicion)
-        float _suspicionTime = 3f;          //seconds we stop after player escapes chase
+        [SerializeField] float _chaseDistance = 3f;          //radius within which will chase player
+        [SerializeField] float _chaseSpeed = 5f;             //speed at which will chase player
+        [SerializeField] float _patrolSpeed = 3f;            //speed when we are not chasing player (patrol, suspicion)
+        [SerializeField] float _suspicionTime = 3f;          //seconds we stop after player escapes chase
         float _lastSawPlayerTimestamp = float.MinValue;
         int _currentWaypointIndex = 0;      
         float _waypointTolerance = 0.5f;    //the distance in which we are considered at the waypoint
@@ -64,7 +64,7 @@ namespace RPG.Control
 
             if (_health.IsDead()) return;
 
-            if (InAttackRangeOfPlayer(_chaseDistance) && _fighter.CanAttack(_player))
+            if (InAttackRangeOfPlayer() && _fighter.CanAttack(_player))
             {
                 _lastSawPlayerTimestamp = _timeSinceStart;
                 AttackBehavior();
@@ -129,18 +129,18 @@ namespace RPG.Control
             _fighter.Attack(_player);
         }
 
-        //returns if distance between us and player is smaller than range
-        private bool InAttackRangeOfPlayer(float range)
+        //returns if distance between us and player is smaller than chaseDistance + weapon range
+        private bool InAttackRangeOfPlayer()
         {
             float distanceToPlayer = Vector3.Distance(transform.position, _player.transform.position);
-            return (distanceToPlayer < range);
+            return (distanceToPlayer < _chaseDistance + _fighter.GetCurrentWeapon().GetRange());
         }
 
         //Called by Unity
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, _chaseDistance);
+            Gizmos.DrawWireSphere(transform.position, _chaseDistance + _fighter.GetCurrentWeapon().GetRange());
         }
 
         public JToken CaptureAsJToken()

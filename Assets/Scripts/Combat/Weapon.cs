@@ -46,7 +46,6 @@ namespace RPG.Combat
         // Called when an item is returned to the pool using Release
         void OnReturnedToPool(Projectile projectile)
         {
-            Debug.Log("Returned to pool");
             projectile.gameObject.SetActive(false);
         }
 
@@ -96,7 +95,6 @@ namespace RPG.Combat
 
         void HandleProjectileTargetCollision(Projectile projectile)
         {
-            Debug.Log("Released");
             projectile.CollisionEvent -= HandleProjectileTargetCollision;
             _projectilePool.Release(projectile);
         }

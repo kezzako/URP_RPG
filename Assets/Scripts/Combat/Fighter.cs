@@ -23,7 +23,7 @@ namespace RPG.Combat
         Health _combatTarget;
         Mover _mover;
         Animator _animator;
-
+        
         private void Awake()
         {
             _mover = GetComponent<Mover>();
@@ -32,7 +32,7 @@ namespace RPG.Combat
 
         private void Start()
         {
-            EquipWeapon(_defaultWeapon);
+            EquipWeapon(_defaultWeapon); 
         }
 
         private void Update()
@@ -116,7 +116,7 @@ namespace RPG.Combat
             }
         }
 
-        private bool IsInRange()
+        public bool IsInRange()
         {
             return Vector3.Distance(transform.position, _combatTarget.transform.position) < _currentWeapon.GetRange();
         }
@@ -146,6 +146,15 @@ namespace RPG.Combat
             _animator.SetTrigger("stopAttack");
         }
 
+        public Weapon GetCurrentWeapon()
+        {
+            return _currentWeapon;
+        }
+
+        public bool isTargetNotNull()
+        {
+            return (_combatTarget != null);
+        }
 
         private void OnDrawGizmosSelected()
         {
