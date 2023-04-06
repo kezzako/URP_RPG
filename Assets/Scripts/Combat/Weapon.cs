@@ -19,12 +19,15 @@ namespace RPG.Combat
 
         ObjectPool<Projectile> _projectilePool;
         [SerializeField] int _maxPoolSize = 10;
+        private string _weaponName = "Weapon";
 
         public void Spawn(Transform rightHand, Transform leftHand, Animator animator)
         {
             if (_weaponPrefab != null)
             {
-                Instantiate(_weaponPrefab, (_isRightHanded ? rightHand : leftHand));
+                DestroyOldWeapon(rightHand, leftHand);
+
+                GameObject weapon = Instantiate(_weaponPrefab, (_isRightHanded ? rightHand : leftHand));
 
                 if (_animOverrController != null)
                 {
@@ -36,6 +39,62 @@ namespace RPG.Combat
             {
                 _projectilePool = new ObjectPool<Projectile>(CreatePooledItem, OnTakeFromPool, OnReturnedToPool, OnDestroyPoolObject, false, 10, _maxPoolSize);
             }
+        }
+
+        //requires the weapon to be the 4th child of the hand, so pretty bad. To change!!
+        private void DestroyOldWeapon(Transform rightHand, Transform leftHand)
+        {
+            GameObject oldWeapon = null;
+
+            //check for weapon in right hand
+            if (rightHand.childCount > 3)
+            {
+                oldWeapon = rightHand.GetChild(3).gameObject;
+            }
+
+            //check for weapon in left hand
+            if (leftHand.childCount > 3 && oldWeapon == null)
+            {
+                oldWeapon = leftHand.GetChild(3).gameObject;
+            }
+            if (oldWeapon == null) return;
+
+            Destroy(oldWeapon);
+        }
+
+        public float GetRange()
+        {
+            return _range;
+        }
+
+        public float GetDamage()
+        {
+            return _damage;
+        }
+
+        public void LaunchProjectile(Transform rightHand, Transform leftHand, Health target)
+        {
+            Vector3 spawnPos = (_isRightHanded ? rightHand : leftHand).position;
+            //Projectile projectileInstance = Instantiate(_projectile, spawnPos, spawnRot);
+            Projectile projectileInstance = _projectilePool.Get();
+
+            projectileInstance.transform.position = spawnPos;
+
+            projectileInstance.SetDamage(_damage);
+            projectileInstance.SetTarget(target);
+
+            projectileInstance.CollisionEvent += HandleProjectileTargetCollision;
+        }
+
+        public bool HasProjectile()
+        {
+            return _projectile != null;
+        }
+
+        void HandleProjectileTargetCollision(Projectile projectile)
+        {
+            projectile.CollisionEvent -= HandleProjectileTargetCollision;
+            _projectilePool.Release(projectile);
         }
 
         Projectile CreatePooledItem()
@@ -60,43 +119,6 @@ namespace RPG.Combat
         void OnDestroyPoolObject(Projectile projectile)
         {
             Destroy(projectile.gameObject);
-        }
-
-        public float GetRange()
-        {
-            return _range;
-        }
-
-        public float GetDamage()
-        {
-            return _damage;
-        }
-
-        public void LaunchProjectile(Transform rightHand, Transform leftHand, Health target)
-        {
-            Vector3 spawnPos = (_isRightHanded ? rightHand : leftHand).position;
-            Quaternion spawnRot = (_isRightHanded ? rightHand : leftHand).rotation;
-            //Projectile projectileInstance = Instantiate(_projectile, spawnPos, spawnRot);
-            Projectile projectileInstance = _projectilePool.Get();
-
-            projectileInstance.transform.position = spawnPos;
-            projectileInstance.transform.rotation = spawnRot;
-
-            projectileInstance.SetDamage(_damage);
-            projectileInstance.SetTarget(target);
-
-            projectileInstance.CollisionEvent += HandleProjectileTargetCollision;
-        }
-
-        public bool HasProjectile()
-        {
-            return _projectile != null;
-        }
-
-        void HandleProjectileTargetCollision(Projectile projectile)
-        {
-            projectile.CollisionEvent -= HandleProjectileTargetCollision;
-            _projectilePool.Release(projectile);
         }
     }
 }
