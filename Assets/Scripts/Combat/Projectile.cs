@@ -42,15 +42,21 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(GameObject.ReferenceEquals(other.gameObject, _target.gameObject))
+        if(other.TryGetComponent<Health>(out Health health))
         {
-            //in weapon.cs we subscribe to this and
-            //trelease the projecile back into the pool.
             CollisionEvent?.Invoke(this);
-
-            _target.takeDamage(_damage);
-
-            //Destroy(this.gameObject);
+            health.takeDamage(_damage);
         }
+
+        //if(GameObject.ReferenceEquals(other.gameObject, _target.gameObject))
+        //{
+        //    //in weapon.cs we subscribe to this and
+        //    //trelease the projecile back into the pool.
+        //    CollisionEvent?.Invoke(this);
+
+        //    _target.takeDamage(_damage);
+
+        //    //Destroy(this.gameObject);
+        //}
     }
 }
