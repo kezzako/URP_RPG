@@ -16,7 +16,7 @@ public class Projectile : MonoBehaviour
     {
         if (_target == null) return;
         
-        transform.LookAt(GetAimLocation());
+        //transform.LookAt(GetAimLocation());
         transform.Translate(Vector3.forward * _speed * Time.deltaTime);
     }
 
@@ -32,7 +32,7 @@ public class Projectile : MonoBehaviour
         _damage = damage;
     }
 
-    private Vector3 GetAimLocation()
+    public Vector3 GetAimLocation()
     {
         CapsuleCollider targetCapsule = _target.GetComponent<CapsuleCollider>();
         if (targetCapsule == null) return _target.transform.position;

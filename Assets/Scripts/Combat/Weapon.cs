@@ -79,9 +79,15 @@ namespace RPG.Combat
             Projectile projectileInstance = _projectilePool.Get();
 
             projectileInstance.transform.position = spawnPos;
-
+            
             projectileInstance.SetDamage(_damage);
+
+            //give the info of who the arrow is supposed to hit/follow.
+            //if it's a homing arrow that follows the target, we need target info
             projectileInstance.SetTarget(target);
+
+            //set the orientation of the arrow to be towards the target
+            projectileInstance.transform.LookAt(projectileInstance.GetAimLocation());
 
             projectileInstance.CollisionEvent += HandleProjectileTargetCollision;
         }

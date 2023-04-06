@@ -140,7 +140,10 @@ namespace RPG.Control
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, _chaseDistance + _fighter.GetCurrentWeapon().GetRange());
+            if (_fighter != null)
+            {
+                Gizmos.DrawWireSphere(transform.position, _chaseDistance + _fighter.GetCurrentWeapon().GetRange());
+            }
         }
 
         public JToken CaptureAsJToken()
