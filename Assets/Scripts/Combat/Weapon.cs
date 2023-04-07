@@ -19,7 +19,6 @@ namespace RPG.Combat
 
         ObjectPool<Projectile> _projectilePool;
         [SerializeField] int _maxPoolSize = 10;
-        private string _weaponName = "Weapon";
 
         public void Spawn(Transform rightHand, Transform leftHand, Animator animator)
         {
@@ -77,6 +76,10 @@ namespace RPG.Combat
             Vector3 spawnPos = (_isRightHanded ? rightHand : leftHand).position;
             //Projectile projectileInstance = Instantiate(_projectile, spawnPos, spawnRot);
             Projectile projectileInstance = _projectilePool.Get();
+            if(projectileInstance == null)
+            {
+                Debug.Log("No projectile1!!!");
+            }
 
             projectileInstance.transform.position = spawnPos;
             
@@ -88,6 +91,9 @@ namespace RPG.Combat
 
             //set the orientation of the arrow to be towards the target
             projectileInstance.transform.LookAt(projectileInstance.GetAimLocation());
+
+            //give pool reference so the arrow can return itself to the pool
+            projectileInstance.SetPool(_projectilePool);
 
             projectileInstance.CollisionEvent += HandleProjectileTargetCollision;
         }
@@ -111,6 +117,7 @@ namespace RPG.Combat
         // Called when an item is returned to the pool using Release
         void OnReturnedToPool(Projectile projectile)
         {
+            Debug.Log("returned to pool");
             projectile.gameObject.SetActive(false);
         }
 
