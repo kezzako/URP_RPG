@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6db9e4ea7dfe14143b0dacf9a7ef9b6b, type: 3}
-  m_Name: Sword
+  m_Name: Weapon
   m_EditorClassIdentifier: 
   _animOverrController: {fileID: 22100000, guid: 4d1c40ab811b6bd458f74880f055a17c,
     type: 2}
@@ -19,3 +19,5 @@ MonoBehaviour:
   _range: 2
   _damage: 5
   _isRightHanded: 1
+  _projectile: {fileID: 0}
+  _maxPoolSize: 10

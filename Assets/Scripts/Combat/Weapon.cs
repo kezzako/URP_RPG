@@ -76,10 +76,6 @@ namespace RPG.Combat
             Vector3 spawnPos = (_isRightHanded ? rightHand : leftHand).position;
             //Projectile projectileInstance = Instantiate(_projectile, spawnPos, spawnRot);
             Projectile projectileInstance = _projectilePool.Get();
-            if(projectileInstance == null)
-            {
-                Debug.Log("No projectile1!!!");
-            }
 
             projectileInstance.transform.position = spawnPos;
             

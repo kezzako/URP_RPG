@@ -9,7 +9,8 @@ public class Projectile : MonoBehaviour
 {
     Health _target = null;
     [SerializeField] float _speed = 15f;
-    float _damage = 0;
+    [SerializeField] bool _isAHomingProjectile = false;
+    float _damage = 0; //damage is set when instantiated by the weapon
 
     ObjectPool<Projectile> _projectilePool;
 
@@ -18,8 +19,14 @@ public class Projectile : MonoBehaviour
     void FixedUpdate()
     {
         if (_target == null) return;
-        
-        //transform.LookAt(GetAimLocation());
+
+        //if homing, turn the projectile towards the target.
+        //if the target dies midway, just keep going straight
+        if (_isAHomingProjectile && !_target.IsDead())
+        {
+            transform.LookAt(GetAimLocation());
+        }
+
         transform.Translate(Vector3.forward * _speed * Time.deltaTime);
     }
 
@@ -57,23 +64,5 @@ public class Projectile : MonoBehaviour
 
         //Return the arrow to the pool after hitting something with a collider.
         CollisionEvent?.Invoke(this);
-
-        
-        //_projectilePool.Release(this);
-        //if(GameObject.ReferenceEquals(other.gameObject, _target.gameObject))
-        //{
-        //    //in weapon.cs we subscribe to this and
-        //    //trelease the projecile back into the pool.
-        //    CollisionEvent?.Invoke(this);
-
-        //    _target.takeDamage(_damage);
-
-        //    //Destroy(this.gameObject);
-        //}
-    }
-
-    private void OnDestroy()
-    {
-        Debug.Log("Projectile DESTROYED!!!!!");
     }
 }

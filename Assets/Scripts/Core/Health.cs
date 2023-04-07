@@ -40,9 +40,10 @@ namespace RPG.Core
         {
             if (!_isDead) 
             { 
-            _animator.SetTrigger("die");
-            _isDead = true;
-            GetComponent<ActionScheduler>().CancelCurrentAction();
+                _animator.SetTrigger("die");
+                _isDead = true;
+                GetComponent<ActionScheduler>().CancelCurrentAction();
+                GetComponent<Collider>().enabled = false;
             }
         }
 
