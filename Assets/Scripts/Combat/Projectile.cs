@@ -10,9 +10,11 @@ public class Projectile : MonoBehaviour
     Health _target = null;
     [SerializeField] float _speed = 15f;
     [SerializeField] bool _isAHomingProjectile = false;
+    [SerializeField] GameObject hitEffect = null;
     float _damage = 0; //damage is set when instantiated by the weapon
 
     ObjectPool<Projectile> _projectilePool;
+    ObjectPool<GameObject> _hitEffectPool;
 
     public event Action<Projectile> CollisionEvent;
 
@@ -62,7 +64,20 @@ public class Projectile : MonoBehaviour
             health.takeDamage(_damage);
         }
 
+        if(hitEffect != null)
+        {
+            Instantiate(hitEffect, transform.position, transform.rotation);
+        }
+
         //Return the arrow to the pool after hitting something with a collider.
         CollisionEvent?.Invoke(this);
+        //StartCoroutine(ReutunToPoolAfterTime(1f));
     }
+
+    //IEnumerator ReutunToPoolAfterTime(float time)
+    //{
+    //    yield return new WaitForSeconds(time);
+    //    CollisionEvent?.Invoke(this);
+
+    //}
 }

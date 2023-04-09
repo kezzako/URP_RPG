@@ -62,6 +62,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 20
   _isAHomingProjectile: 1
+  hitEffect: {fileID: 8161398529840885110, guid: 2d7a5ce752a772c488eb396bded1d57f,
+    type: 3}
 --- !u!54 &-1799860570701247087
 Rigidbody:
   m_ObjectHideFlags: 0
