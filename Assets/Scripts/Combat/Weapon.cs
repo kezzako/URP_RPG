@@ -113,7 +113,6 @@ namespace RPG.Combat
         // Called when an item is returned to the pool using Release
         void OnReturnedToPool(Projectile projectile)
         {
-            Debug.Log("returned to pool");
             projectile.gameObject.SetActive(false);
         }
 
