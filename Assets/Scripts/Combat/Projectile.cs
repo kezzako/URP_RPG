@@ -13,9 +13,6 @@ public class Projectile : MonoBehaviour
     [SerializeField] GameObject hitEffect = null;
     float _damage = 0; //damage is set when instantiated by the weapon
 
-    ObjectPool<Projectile> _projectilePool;
-    ObjectPool<GameObject> _hitEffectPool;
-
     public event Action<Projectile> CollisionEvent;
 
     void FixedUpdate()
@@ -52,10 +49,10 @@ public class Projectile : MonoBehaviour
         return _target.transform.position + Vector3.up * targetCapsule.height / 2;
     }
 
-    public void SetPool(ObjectPool<Projectile> pool)
-    {
-        _projectilePool = pool;
-    }
+    //public void SetPool(ObjectPool<Projectile> pool)
+    //{
+    //    //_projectilePool = pool;
+    //}
 
     private void OnTriggerEnter(Collider other)
     {
@@ -68,10 +65,12 @@ public class Projectile : MonoBehaviour
         {
             Instantiate(hitEffect, transform.position, transform.rotation);
         }
-
+        float oldSpeed = _speed;
         //Return the arrow to the pool after hitting something with a collider.
         CollisionEvent?.Invoke(this);
-        //StartCoroutine(ReutunToPoolAfterTime(1f));
+
+        //StartCoroutine(ReutunToPoolAfterTime(0.25f));
+    
     }
 
     //IEnumerator ReutunToPoolAfterTime(float time)

@@ -18,7 +18,7 @@ namespace RPG.Combat
         [SerializeField] Projectile _projectile = null;
 
         ObjectPool<Projectile> _projectilePool;
-        [SerializeField] int _maxPoolSize = 10;
+        [SerializeField] int _maxProjectilePoolSize = 10;
 
         public void Spawn(Transform rightHand, Transform leftHand, Animator animator)
         {
@@ -36,7 +36,7 @@ namespace RPG.Combat
 
             if (HasProjectile())
             {
-                _projectilePool = new ObjectPool<Projectile>(CreatePooledItem, OnTakeFromPool, OnReturnedToPool, OnDestroyPoolObject, false, 10, _maxPoolSize);
+                _projectilePool = new ObjectPool<Projectile>(CreatePooledItem, OnTakeFromPool, OnReturnedToPool, OnDestroyPoolObject, false, 10, _maxProjectilePoolSize);
             }
         }
 
@@ -87,9 +87,6 @@ namespace RPG.Combat
 
             //set the orientation of the arrow to be towards the target
             projectileInstance.transform.LookAt(projectileInstance.GetAimLocation());
-
-            //give pool reference so the arrow can return itself to the pool
-            projectileInstance.SetPool(_projectilePool);
 
             projectileInstance.CollisionEvent += HandleProjectileTargetCollision;
         }
