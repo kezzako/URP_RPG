@@ -66,17 +66,19 @@ public class Projectile : MonoBehaviour
             Instantiate(hitEffect, transform.position, transform.rotation);
         }
         float oldSpeed = _speed;
+        _speed = 0;
         //Return the arrow to the pool after hitting something with a collider.
-        CollisionEvent?.Invoke(this);
+        //CollisionEvent?.Invoke(this);
 
-        //StartCoroutine(ReutunToPoolAfterTime(0.25f));
-    
+        StartCoroutine(ReutunToPoolAfterTime(1f, oldSpeed));
+        
+
     }
 
-    //IEnumerator ReutunToPoolAfterTime(float time)
-    //{
-    //    yield return new WaitForSeconds(time);
-    //    CollisionEvent?.Invoke(this);
-
-    //}
+    IEnumerator ReutunToPoolAfterTime(float time, float oldSpeed)
+    {
+        yield return new WaitForSeconds(time);
+        CollisionEvent?.Invoke(this);
+        _speed = oldSpeed;
+    }
 }

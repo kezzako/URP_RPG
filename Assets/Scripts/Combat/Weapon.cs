@@ -28,9 +28,18 @@ namespace RPG.Combat
 
                 GameObject weapon = Instantiate(_weaponPrefab, (_isRightHanded ? rightHand : leftHand));
 
+                //this var will be null if there is no AnimatorOverrideController.
+                var overrideController = animator.runtimeAnimatorController as AnimatorOverrideController;
+
                 if (_animOverrController != null)
                 {
                     animator.runtimeAnimatorController = _animOverrController;
+                }
+
+                //fixes bug where if we grab a weapon, then a wepaon without animOverrideCOntroller we kept using the last weapon's animations
+                else if (overrideController != null)
+                {
+                    animator.runtimeAnimatorController = overrideController.runtimeAnimatorController;
                 }
             }
 
