@@ -162,6 +162,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: f6d84c8c9d748a348a482f34724b6d95,
         type: 2}
+    - target: {fileID: 7876435958773335464, guid: ba5b0b3f4ca643b4883591748d9c2385,
+        type: 3}
+      propertyPath: _defaultWeaponName
+      value: Sword
+      objectReference: {fileID: 0}
     - target: {fileID: 7876435958773335470, guid: ba5b0b3f4ca643b4883591748d9c2385,
         type: 3}
       propertyPath: m_RootOrder
@@ -1504,6 +1509,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 761760649}
     m_Modifications:
+    - target: {fileID: 243522469, guid: bf60abb14a979264786828044731bdbf, type: 3}
+      propertyPath: respawnTime
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 643412400648685503, guid: bf60abb14a979264786828044731bdbf,
         type: 3}
       propertyPath: m_Name
@@ -1563,6 +1572,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7378152861585799459, guid: bf60abb14a979264786828044731bdbf,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf60abb14a979264786828044731bdbf, type: 3}
@@ -3915,6 +3929,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Archer (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7898324843611521539, guid: 9b9bf40af36be18429cd5821de70b20c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7898324843611521545, guid: 9b9bf40af36be18429cd5821de70b20c,
+        type: 3}
+      propertyPath: _defaultWeapon
+      value: 
+      objectReference: {fileID: 11400000, guid: fed502369fa4aac4db8e7bcd12dd4dfa,
+        type: 2}
+    - target: {fileID: 7898324843611521545, guid: 9b9bf40af36be18429cd5821de70b20c,
+        type: 3}
+      propertyPath: _defaultWeaponName
+      value: Bow
+      objectReference: {fileID: 0}
     - target: {fileID: 7898324843611521551, guid: 9b9bf40af36be18429cd5821de70b20c,
         type: 3}
       propertyPath: m_RootOrder
@@ -4816,6 +4846,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: f6d84c8c9d748a348a482f34724b6d95,
         type: 2}
+    - target: {fileID: 7876435958773335464, guid: ba5b0b3f4ca643b4883591748d9c2385,
+        type: 3}
+      propertyPath: _defaultWeaponName
+      value: Sword
+      objectReference: {fileID: 0}
     - target: {fileID: 7876435958773335470, guid: ba5b0b3f4ca643b4883591748d9c2385,
         type: 3}
       propertyPath: m_RootOrder
@@ -5174,6 +5209,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SwordPickup
       objectReference: {fileID: 0}
+    - target: {fileID: 7873489624779904619, guid: d07d934a34bb1d441866f41d8fcfc54a,
+        type: 3}
+      propertyPath: respawnTime
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d07d934a34bb1d441866f41d8fcfc54a, type: 3}
 --- !u!1001 &2045069646
@@ -5183,6 +5223,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 761760649}
     m_Modifications:
+    - target: {fileID: 1852759215914824572, guid: 1c57b01310406fb4bb5bc0ad8baf3407,
+        type: 3}
+      propertyPath: respawnTime
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7502554828121313379, guid: 1c57b01310406fb4bb5bc0ad8baf3407,
         type: 3}
       propertyPath: m_RootOrder
@@ -5397,6 +5442,12 @@ PrefabInstance:
         type: 3}
       propertyPath: _defaultWeapon
       value: 
+      objectReference: {fileID: 11400000, guid: f6d84c8c9d748a348a482f34724b6d95,
+        type: 2}
+    - target: {fileID: 4302176413672141871, guid: bdaa90a328b8e104685a6c8b92acff3e,
+        type: 3}
+      propertyPath: _defaultWeaponName
+      value: Unarmed
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bdaa90a328b8e104685a6c8b92acff3e, type: 3}
@@ -5422,6 +5473,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7876435958773335464, guid: ba5b0b3f4ca643b4883591748d9c2385,
+        type: 3}
+      propertyPath: _defaultWeapon
+      value: 
+      objectReference: {fileID: 11400000, guid: fed502369fa4aac4db8e7bcd12dd4dfa,
+        type: 2}
+    - target: {fileID: 7876435958773335464, guid: ba5b0b3f4ca643b4883591748d9c2385,
+        type: 3}
+      propertyPath: _defaultWeaponName
+      value: Sword
       objectReference: {fileID: 0}
     - target: {fileID: 7876435958773335470, guid: ba5b0b3f4ca643b4883591748d9c2385,
         type: 3}

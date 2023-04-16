@@ -12,6 +12,7 @@ public class Projectile : MonoBehaviour
     [SerializeField] bool _isAHomingProjectile = false;
     [SerializeField] GameObject hitEffect = null;
     float _damage = 0; //damage is set when instantiated by the weapon
+    float _timeBeforeReturnToPool = 0;
 
     public event Action<Projectile> CollisionEvent;
 
@@ -56,6 +57,8 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Projectile")) return; //ignore collision with other projectiles
+
         if(other.TryGetComponent<Health>(out Health health))
         {
             health.takeDamage(_damage);
@@ -65,12 +68,14 @@ public class Projectile : MonoBehaviour
         {
             Instantiate(hitEffect, transform.position, transform.rotation);
         }
-        float oldSpeed = _speed;
-        _speed = 0;
+
         //Return the arrow to the pool after hitting something with a collider.
         //CollisionEvent?.Invoke(this);
 
-        StartCoroutine(ReutunToPoolAfterTime(1f, oldSpeed));
+        float oldSpeed = _speed;
+        _speed = 0;
+        GetComponent<Collider>().enabled = false;
+        StartCoroutine(ReutunToPoolAfterTime(_timeBeforeReturnToPool, oldSpeed));
         
 
     }
@@ -80,5 +85,6 @@ public class Projectile : MonoBehaviour
         yield return new WaitForSeconds(time);
         CollisionEvent?.Invoke(this);
         _speed = oldSpeed;
+        GetComponent<Collider>().enabled = true;
     }
 }

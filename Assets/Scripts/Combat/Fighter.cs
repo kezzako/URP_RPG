@@ -4,10 +4,12 @@ using UnityEngine;
 using RPG.Movement;
 using RPG.Core;
 using System;
+using GameDevTV.Saving;
+using Newtonsoft.Json.Linq;
 
 namespace RPG.Combat
 {
-    public class Fighter : MonoBehaviour, IActions
+    public class Fighter : MonoBehaviour, IActions, IJsonSaveable
     {
         [SerializeField] Transform _rightHandTransform = null;
         [SerializeField] Transform _leftHandTransform = null;
@@ -23,7 +25,7 @@ namespace RPG.Combat
         Health _combatTarget;
         Mover _mover;
         Animator _animator;
-        
+
         private void Awake()
         {
             _mover = GetComponent<Mover>();
@@ -32,7 +34,11 @@ namespace RPG.Combat
 
         private void Start()
         {
-            EquipWeapon(_defaultWeapon); 
+            if (_currentWeapon == null)
+            {
+                //only equip weapon if null, because the saving system might already have equipped one
+                EquipWeapon(_defaultWeapon);
+            }
         }
 
         private void Update()
@@ -109,7 +115,7 @@ namespace RPG.Combat
         //BowShotWithAnimEvent animation event
         void Shoot()
         {
-            if(_combatTarget == null) return;
+            if (_combatTarget == null) return;
             if (_currentWeapon.HasProjectile())
             {
                 _currentWeapon.LaunchProjectile(_rightHandTransform, _leftHandTransform, _combatTarget);
@@ -163,6 +169,18 @@ namespace RPG.Combat
                 Gizmos.color = Color.green;
                 Gizmos.DrawWireSphere(transform.position, _currentWeapon.GetRange());
             }
+        }
+
+        public JToken CaptureAsJToken()
+        {
+            return JToken.FromObject(_currentWeapon.name);
+        }
+
+        public void RestoreFromJToken(JToken state)
+        {
+            string weaponName = state.ToObject<string>();
+            Weapon weapon = Resources.Load<Weapon>(weaponName);
+            EquipWeapon(weapon);
         }
     }
 }

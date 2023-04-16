@@ -10,15 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6db9e4ea7dfe14143b0dacf9a7ef9b6b, type: 3}
-  m_Name: Weapon
+  m_Name: Sword
   m_EditorClassIdentifier: 
-  _animOverrController: {fileID: 22100000, guid: 9406910dcec93344f87b36124cb3a1fc,
+  _animOverrController: {fileID: 22100000, guid: 4d1c40ab811b6bd458f74880f055a17c,
     type: 2}
-  _weaponPrefab: {fileID: 5336833220527061765, guid: d585c90d265e0bf4b9f3e1429e8bcf7f,
+  _weaponPrefab: {fileID: 643412400648685503, guid: 50f3942eea2ea7c49bcf941c53a5c85c,
     type: 3}
-  _range: 10
-  _damage: 10
-  _isRightHanded: 0
-  _projectile: {fileID: -7061304179188584118, guid: a4bcf800748540e44b08b63f5822c1e8,
-    type: 3}
-  _maxPoolSize: 10
+  _range: 2
+  _damage: 5
+  _isRightHanded: 1
+  _projectile: {fileID: 0}
+  _maxProjectilePoolSize: 10

@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6db9e4ea7dfe14143b0dacf9a7ef9b6b, type: 3}
-  m_Name: Fireball
+  m_Name: Bow
   m_EditorClassIdentifier: 
-  _animOverrController: {fileID: 22100000, guid: 68a2b18d5abc85c419484ff27e5e48c0,
+  _animOverrController: {fileID: 22100000, guid: 9406910dcec93344f87b36124cb3a1fc,
     type: 2}
-  _weaponPrefab: {fileID: 643412400648685503, guid: bf60abb14a979264786828044731bdbf,
+  _weaponPrefab: {fileID: 5336833220527061765, guid: d585c90d265e0bf4b9f3e1429e8bcf7f,
     type: 3}
-  _range: 57.88
-  _damage: 5
-  _isRightHanded: 1
-  _projectile: {fileID: -7061304179188584118, guid: b748a3a6e52a26b4f92a56352de5bca6,
+  _range: 10
+  _damage: 10
+  _isRightHanded: 0
+  _projectile: {fileID: -7061304179188584118, guid: a4bcf800748540e44b08b63f5822c1e8,
     type: 3}
-  _maxPoolSize: 10
+  _maxProjectilePoolSize: 10
